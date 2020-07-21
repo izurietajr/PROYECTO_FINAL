@@ -4,11 +4,11 @@
 #+latex_header: \newcommand{\hright}{INF 324}
 
 * Introducción
-El reconocimiento de objetos es la tarea de encontrar e identificar autom
-́aticamente objetos en una imagen. Los humanos detectamos y reconocemos objetos
-en im ́agenes con extrema facilidad, inclusive si los objetos sufren variaciones
-de forma, taman ̃o, localizaci ́on, color, textura, brillo o est ́an parcialmente
-obstruidos.
+El reconocimiento de objetos es la tarea de encontrar e identificar
+automáticamente objetos en una imagen. Los humanos detectamos y reconocemos
+objetos en imágenes con extrema facilidad, inclusive si los objetos sufren
+variaciones de forma, tamaño, localización, color, textura, brillo o están
+parcialmente obstruidos.
 
 * Objetivos
 ** Objetivos generales
@@ -21,6 +21,18 @@ Script de línea de comandos.
 
 *** Utilización
 Ruta de la imagen como argumento, salida de texto (o imagen modificada).
+
+** Preprocesamiento
+
+*** Reducción de ruido
+*** Corrección de iluminación
+
+** Segmentación
+
+** Procesamiento
+*** Momentos de Hu
+*** Extracción de rasgos
+*** Comparación cy clasificación
 
 * Pruebas
 
