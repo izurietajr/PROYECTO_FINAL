@@ -16,6 +16,11 @@ obstruidos.
 ** Objetivos específicos
 
 * Desarrollo
+** Estructura del programa
+Script de línea de comandos.
+
+*** Utilización
+Ruta de la imagen como argumento, salida de texto (o imagen modificada).
 
 * Pruebas
 
