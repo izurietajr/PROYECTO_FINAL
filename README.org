@@ -1,0 +1,12 @@
+#+TITLE: INF 324 - Proyecto de procesamiento de imágenes
+
+Proyecto en python para el reconocimiento de objetos en imágenes mediante
+momentos de Hu
+
+* Integrantes
+
+| Nombres y apellidos          |      CI |
+|------------------------------+---------|
+| Jesus Rodolfo Izurieta Veliz | 9860616 |
+
+* Instrucciones

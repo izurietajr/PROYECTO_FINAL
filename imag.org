@@ -1,0 +1,24 @@
+#+TITLE: Procesamiento de imágenes
+#+include: ~/org/templates/tarea.org
+#+latex_header: \newcommand{\hleft}{Procesamiento de imágenes}
+#+latex_header: \newcommand{\hright}{INF 324}
+
+* Introducción
+El reconocimiento de objetos es la tarea de encontrar e identificar autom
+́aticamente objetos en una imagen. Los humanos detectamos y reconocemos objetos
+en im ́agenes con extrema facilidad, inclusive si los objetos sufren variaciones
+de forma, taman ̃o, localizaci ́on, color, textura, brillo o est ́an parcialmente
+obstruidos.
+
+* Objetivos
+** Objetivos generales
+
+** Objetivos específicos
+
+* Desarrollo
+
+* Pruebas
+
+* Conclusiones
+
+* Referencias
