@@ -12,12 +12,58 @@ parcialmente obstruidos.
 
 * Objetivos
 ** Objetivos generales
+Conteo de monedas en una fotografía (?)
 
 ** Objetivos específicos
 
+* Fundameentos teóricos
+Representamos una imagen digital como una secuencia
+
+\begin{equation}
+I = (I(x, y), w, h)\quad \forall x \in [0, w], y \in [0, h]
+\end{equation}
+
+Donde $I(x, y)$ es una función de $\mathbb N^2$ en el intérvalo $[0,1]\in \mathbb R$.
+
+$$
+I:\mathbb N^2 \rightarrow [0, 1]
+$$
+
+Donde el rango representa el nivel de luminosidad para los pixeles en
+coordenadas x e y en el caso de imágenes en escala de grises, para imágenes a
+color, tendremos tres funciones, una para cada uno de los colores rojo, verde y
+azul. En el caso de una imagen digital, estos valores varían en el rango
+$[0,255]\in \mathbb N$.
+
 * Desarrollo
 ** Estructura del programa
-Script de línea de comandos.
+El proyecto no contará con una interfaz gráfica, sino que constará de un
+notebook interactivo de jupyter en el que se podrá apreciar tanto el código
+fuente como los resultados de cada paso del proceso de manipulado de las
+imágenes. Para esto, se desarrollan las siguientes bibliotecas:
+
+*** Clase Image =image.py=
+La clase imagen es una abstracción básica que nos permitirá acceder fácilmente a
+una imagen que puede ser cargada desde un archivo, o puede ser creada desde un
+array y posteriormente mostrada en un notebook de jupyter.
+
+| Método                   | Descripción                                        |
+|--------------------------+----------------------------------------------------|
+| =load_file(ruta)=        | Carga la imagen que se encuentra en la ruta        |
+| =load_array(array)=      | Convierte el array en una imagen                   |
+| =show()=                 | Retorna un objeto PIL.Image.Image                  |
+| =I(x, y)=                | Retorna los píxeles en la posición x, y            |
+| =I_normal(x, y)=         | Igual que I() pero en el rango [0, 1]              |
+| =I_m(x, y, color)=       | Retorna un único pixel                             |
+| =I_mnormal(x, y, color)= | Igual que I_m() pero en el rango [0, 1]            |
+| =iterator()=             | Retorna un iterador de tuplas x, y                 |
+| =map_over(func)=         | Permite sobreescribir píxeles mediante una función |
+
+La función =map_over(func)= nos permitirá recorrer la totalidad de la imagen
+aplicando en cada pixel la función =func=, por ejemplo el código
+=img2.map_over(lambda x, y, z: (x, x, x))= ejecutado sobre una imagen img2,
+permitirá cambiar el valor de cada canal por su valor rojo, lo que convertirá a
+la imagen a blanco y negro.
 
 *** Utilización
 Ruta de la imagen como argumento, salida de texto (o imagen modificada).
@@ -29,8 +75,15 @@ Ruta de la imagen como argumento, salida de texto (o imagen modificada).
 
 ** Segmentación
 
+** Datos de comparación
+
 ** Procesamiento
 *** Momentos de Hu
+Para obtener un valor propio de la forma geométrica de un objeto en una imagen,
+usaremos momentos de Hu o momento sinvariantes, un algoritmo que nos permite
+obtener un conjunto de valores asignados a una matriz según la disposición que
+esta tenga, sin variar en cuanto a transformaciones como escalado o rotación.
+
 *** Extracción de rasgos
 *** Comparación cy clasificación
 
@@ -39,3 +92,21 @@ Ruta de la imagen como argumento, salida de texto (o imagen modificada).
 * Conclusiones
 
 * Referencias
+
+* Anexos
+** Código fuente
+*** Clase Imagen
+*** Filtrado ADF
+*** Filtrado Top-Hat
+*** Filtrado Otsu
+*** Momentos de Hu
+Obtención de momentos geométricos de orden $p+q$, $m_{pq} = \sum_x \sum_y x^p y^q I(x, y)$.
+
+#+begin_src python
+def m_pq():
+   
+#+end_src
+
+*** KNN
+
+** Resultados
