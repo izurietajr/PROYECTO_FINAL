@@ -16,33 +16,27 @@ Conteo de monedas en una fotografía (?)
 
 ** Objetivos específicos
 
-* Fundameentos teóricos
-Representamos una imagen digital como una secuencia
+* Fundamentos teóricos
+Primeramente definiremos algunos conceptos que utilizaremos en el desarrollo del
+proyecto. Para el tratamiento de una imagen digital, la representaremos como una
+función de la posición de sus pixeles como sigue:
 
-\begin{equation}
-I = (I(x, y), w, h)\quad \forall x \in [0, w], y \in [0, h]
-\end{equation}
-
-Donde $I(x, y)$ es una función de $\mathbb N^2$ en el intérvalo $[0,1]\in \mathbb R$.
-
-$$
-I:\mathbb N^2 \rightarrow [0, 1]
-$$
+$$ I:\mathbb N^2 \rightarrow [0, 1] $$
+$$ I(x, y) $$
 
 Donde el rango representa el nivel de luminosidad para los pixeles en
 coordenadas x e y en el caso de imágenes en escala de grises, para imágenes a
-color, tendremos tres funciones, una para cada uno de los colores rojo, verde y
-azul. En el caso de una imagen digital, estos valores varían en el rango
-$[0,255]\in \mathbb N$.
+color, tendremos en su lugar una tupla de tres elementos, uno para cada uno de
+los colores rojo, verde y azul. En el caso de una imagen digital, estos valores
+varían en el rango $[0,255]\in \mathbb N$.
 
 * Desarrollo
-** Estructura del programa
 El proyecto no contará con una interfaz gráfica, sino que constará de un
 notebook interactivo de jupyter en el que se podrá apreciar tanto el código
 fuente como los resultados de cada paso del proceso de manipulado de las
 imágenes. Para esto, se desarrollan las siguientes bibliotecas:
 
-*** Clase Image =image.py=
+** Clase Image
 La clase imagen es una abstracción básica que nos permitirá acceder fácilmente a
 una imagen que puede ser cargada desde un archivo, o puede ser creada desde un
 array y posteriormente mostrada en un notebook de jupyter.
@@ -65,9 +59,6 @@ aplicando en cada pixel la función =func=, por ejemplo el código
 permitirá cambiar el valor de cada canal por su valor rojo, lo que convertirá a
 la imagen a blanco y negro.
 
-*** Utilización
-Ruta de la imagen como argumento, salida de texto (o imagen modificada).
-
 ** Preprocesamiento
 
 *** Reducción de ruido
@@ -80,9 +71,21 @@ Ruta de la imagen como argumento, salida de texto (o imagen modificada).
 ** Procesamiento
 *** Momentos de Hu
 Para obtener un valor propio de la forma geométrica de un objeto en una imagen,
-usaremos momentos de Hu o momento sinvariantes, un algoritmo que nos permite
+usaremos momentos de Hu o momentos invariantes, un algoritmo que nos permite
 obtener un conjunto de valores asignados a una matriz según la disposición que
 esta tenga, sin variar en cuanto a transformaciones como escalado o rotación.
+
+Los momentos de orden $(p+q)$ en dos dimensiones sobre una función de
+distribución $p(x, y)$ continua, son calculados mediante integrales de Riemman
+como sigue:
+
+$$
+m_{pq} =  \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} x^p y^q p(x, y)\,dx\,dy \quad p, q = 0, 1, 2, ...
+$$
+
+Sin embargo, en el caso del tratamiento de imágenes, esta será la función
+discreta $I(x, y)$ que describa nuestra imagen en función de la posición de sus
+pixeles.
 
 *** Extracción de rasgos
 *** Comparación cy clasificación
