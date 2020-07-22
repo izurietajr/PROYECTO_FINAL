@@ -1,0 +1,189 @@
+% Created 2020-07-21 Tue 23:47
+% Intended LaTeX compiler: pdflatex
+\documentclass[letter]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage[margin=1.3in]{geometry}
+\setlength{\columnsep}{1cm}
+\usepackage{palatino}
+\fontfamily{ppl}\selectfont
+\usepackage[spanish]{babel}
+\renewcommand{\baselinestretch}{1.5}
+\usepackage{fancyhdr}
+\fancyhf{}
+\pagestyle{fancy}
+\lhead{\hleft}
+\rhead{\hright}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{0pt}
+\newcommand{\hleft}{Procesamiento de imágenes}
+\newcommand{\hright}{INF 324}
+\author{Jesus Rodolfo Izurieta Veliz}
+\date{\today}
+\title{Procesamiento de imágenes}
+\hypersetup{
+ pdfauthor={Jesus Rodolfo Izurieta Veliz},
+ pdftitle={Procesamiento de imágenes},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 26.3 (Org mode 9.4)}, 
+ pdflang={Spanish}}
+\begin{document}
+
+\maketitle
+
+\section{Introducción}
+\label{sec:orgd9ecb52}
+El reconocimiento de objetos es la tarea de encontrar e identificar
+automáticamente objetos en una imagen. Los humanos detectamos y reconocemos
+objetos en imágenes con extrema facilidad, inclusive si los objetos sufren
+variaciones de forma, tamaño, localización, color, textura, brillo o están
+parcialmente obstruidos.
+
+\section{Objetivos}
+\label{sec:org135b074}
+\subsection{Objetivos generales}
+\label{sec:org4a1ed3a}
+Conteo de monedas en una fotografía (?)
+
+\subsection{Objetivos específicos}
+\label{sec:orge8f6ca1}
+
+\section{Fundameentos teóricos}
+\label{sec:org52b8a44}
+Representamos una imagen digital como una secuencia
+
+\begin{equation}
+I = (I(x, y), w, h)\quad \forall x \in [0, w], y \in [0, h]
+\end{equation}
+
+Donde \(I(x, y)\) es una función de \(\mathbb N^2\) en el intérvalo \([0,1]\in \mathbb R\).
+
+$$
+I:\mathbb N^2 \rightarrow [0, 1]
+$$
+
+Donde el rango representa el nivel de luminosidad para los pixeles en
+coordenadas x e y en el caso de imágenes en escala de grises, para imágenes a
+color, tendremos tres funciones, una para cada uno de los colores rojo, verde y
+azul. En el caso de una imagen digital, estos valores varían en el rango
+\([0,255]\in \mathbb N\).
+
+\section{Desarrollo}
+\label{sec:orgb546ddb}
+\subsection{Estructura del programa}
+\label{sec:org4c1a1e4}
+El proyecto no contará con una interfaz gráfica, sino que constará de un
+notebook interactivo de jupyter en el que se podrá apreciar tanto el código
+fuente como los resultados de cada paso del proceso de manipulado de las
+imágenes. Para esto, se desarrollan las siguientes bibliotecas:
+
+\subsubsection{Clase Image \texttt{image.py}}
+\label{sec:orgda60dce}
+La clase imagen es una abstracción básica que nos permitirá acceder fácilmente a
+una imagen que puede ser cargada desde un archivo, o puede ser creada desde un
+array y posteriormente mostrada en un notebook de jupyter.
+
+\begin{center}
+\begin{tabular}{ll}
+Método & Descripción\\
+\hline
+\texttt{load\_file(ruta)} & Carga la imagen que se encuentra en la ruta\\
+\texttt{load\_array(array)} & Convierte el array en una imagen\\
+\texttt{show()} & Retorna un objeto PIL.Image.Image\\
+\texttt{I(x, y)} & Retorna los píxeles en la posición x, y\\
+\texttt{I\_normal(x, y)} & Igual que I() pero en el rango [0, 1]\\
+\texttt{I\_m(x, y, color)} & Retorna un único pixel\\
+\texttt{I\_mnormal(x, y, color)} & Igual que I\textsubscript{m}() pero en el rango [0, 1]\\
+\texttt{iterator()} & Retorna un iterador de tuplas x, y\\
+\texttt{map\_over(func)} & Permite sobreescribir píxeles mediante una función\\
+\end{tabular}
+\end{center}
+
+La función \texttt{map\_over(func)} nos permitirá recorrer la totalidad de la imagen
+aplicando en cada pixel la función \texttt{func}, por ejemplo el código
+\texttt{img2.map\_over(lambda x, y, z: (x, x, x))} ejecutado sobre una imagen img2,
+permitirá cambiar el valor de cada canal por su valor rojo, lo que convertirá a
+la imagen a blanco y negro.
+
+\subsubsection{Utilización}
+\label{sec:org29611a0}
+Ruta de la imagen como argumento, salida de texto (o imagen modificada).
+
+\subsection{Preprocesamiento}
+\label{sec:org037b8dd}
+
+\subsubsection{Reducción de ruido}
+\label{sec:org411ba4b}
+\subsubsection{Corrección de iluminación}
+\label{sec:orgaccad57}
+
+\subsection{Segmentación}
+\label{sec:orga2fde70}
+
+\subsection{Datos de comparación}
+\label{sec:org56fe840}
+
+\subsection{Procesamiento}
+\label{sec:org2156455}
+\subsubsection{Momentos de Hu}
+\label{sec:org13e647c}
+Para obtener un valor propio de la forma geométrica de un objeto en una imagen,
+usaremos momentos de Hu o momento sinvariantes, un algoritmo que nos permite
+obtener un conjunto de valores asignados a una matriz según la disposición que
+esta tenga, sin variar en cuanto a transformaciones como escalado o rotación.
+
+\subsubsection{Extracción de rasgos}
+\label{sec:orge9a528d}
+\subsubsection{Comparación cy clasificación}
+\label{sec:orgb620e19}
+
+\section{Pruebas}
+\label{sec:org0dc7478}
+
+\section{Conclusiones}
+\label{sec:orgfbd3edc}
+
+\section{Referencias}
+\label{sec:org6670398}
+
+\section{Anexos}
+\label{sec:orge896747}
+\subsection{Código fuente}
+\label{sec:org16c5aab}
+\subsubsection{Clase Imagen}
+\label{sec:orgf17edff}
+\subsubsection{Filtrado ADF}
+\label{sec:org176b23f}
+\subsubsection{Filtrado Top-Hat}
+\label{sec:orge63acb7}
+\subsubsection{Filtrado Otsu}
+\label{sec:orgd46eba9}
+\subsubsection{Momentos de Hu}
+\label{sec:orge8ffbd3}
+Obtención de momentos geométricos de orden \(p+q\), \(m_{pq} = \sum_x \sum_y x^p y^q I(x, y)\).
+
+\begin{verbatim}
+def m_pq():
+   
+\end{verbatim}
+
+\subsubsection{KNN}
+\label{sec:org85c859e}
+
+\subsection{Resultados}
+\label{sec:orgb6a7c2a}
+\end{document}
