@@ -32,8 +32,12 @@ class Image:
         return triple[color]
 
     def I_normal(self, x, y):
-        triple = self.array[x][y][color]
-        return self.array[x][y]
+        (i, j, k) = self.I(x, y)
+        return (i/255, j/255, k/255)
+
+    def I_mnormal(self, x, y, color=0):
+        i = self.I_m(x, y, color)
+        return i/255
 
     def show(self, route=None):
         if route:
