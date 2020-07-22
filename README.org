@@ -3,12 +3,6 @@
 Proyecto en python para el reconocimiento de objetos en imágenes mediante
 momentos de Hu
 
-* Integrantes
-
-| Nombres y apellidos          |      CI |
-|------------------------------+---------|
-| Jesus Rodolfo Izurieta Veliz | 9860616 |
-
 * Requisitos
 - matplotlib
 - PIL
@@ -18,4 +12,4 @@ una matriz y para almacenar una matriz como un archivo de imagen, el código que
 implementa todos los algoritmos necesarios para este proyecto fue desarrollado
 desde cero y se encuentra en este repositorio.
 
-* Instrucciones
+* TODO Instrucciones
