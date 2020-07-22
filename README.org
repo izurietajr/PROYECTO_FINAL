@@ -9,4 +9,13 @@ momentos de Hu
 |------------------------------+---------|
 | Jesus Rodolfo Izurieta Veliz | 9860616 |
 
+* Requisitos
+- matplotlib
+- PIL
+- numpy
+Estas bibliotecas sólo se utilizan para el proceso de convertir una imagen en
+una matriz y para almacenar una matriz como un archivo de imagen, el código que
+implementa todos los algoritmos necesarios para este proyecto fue desarrollado
+desde cero y se encuentra en este repositorio.
+
 * Instrucciones
