@@ -44,7 +44,6 @@ class Image:
             self.route = route
         image_arr = np.asarray(self.array, dtype="uint8")
         img_file = pil_image.fromarray(image_arr, 'RGB')
-
         return img_file
 
     def iterator(self):
@@ -55,3 +54,29 @@ class Image:
     def map_over(self, func):
         for x, y in self.iterator():
             self.array[x][y] = func(*self.I(x, y))
+
+
+    def hu_moment(self):
+
+        def moment_pq(p, q):
+            sum = 0
+            for x, y in self.iterator():
+                sum += x**p * y**q * self.I_mnormal(x, y)
+            return sum
+
+        m00 = moment_pq(0, 0)
+        m01 = moment_pq(0, 1)
+        m11 = moment_pq(1, 1)
+        m10 = moment_pq(1, 0)
+        m20 = moment_pq(2, 0)
+        m02 = moment_pq(0, 2)
+
+        def central_moment_20(a, b, c):
+            return (a-(b**2/c))/(c**2)
+
+        n20 = central_moment_20(m20, m10, m00)
+        n02 = central_moment_20(m02, m01, m00)
+        n11 = central_moment_20(m11, m10*m01, m00)
+
+        self.phi1, self.phi2 = (n20+n02, (n20-n02)**2+4*n11**2)
+        return (self.phi1, self.phi2)
