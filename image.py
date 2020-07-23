@@ -26,17 +26,21 @@ class Image:
         self.width = len(array[0])
 
     def I(self, x, y):
+        """ Devuelve rgb en x, y """
         return tuple(self.array[x][y])
 
     def I_m(self, x, y, color=0):
+        """ Devuelve un color de x, y """
         triple = self.array[x][y]
         return triple[color]
 
     def I_normal(self, x, y):
+        """ Devuelve rgb en [0, 1] """
         (i, j, k) = self.I(x, y)
         return (i/255, j/255, k/255)
 
     def I_mnormal(self, x, y, color=0):
+        """ Devuelve color en [0, 1] """
         i = self.I_m(x, y, color)
         return i/255
 
@@ -53,13 +57,15 @@ class Image:
                 yield (i,j)
 
     def map_over(self, func):
+        """ Ejecución de func sobre cada pixel """
         for x, y in self.iterator():
             self.array[x][y] = func(*self.I(x, y))
 
 
-    def hu_moment(self):
+    def hu_moments(self):
 
         def moment_pq(p, q):
+            """ Momentos geométricos """
             sum = 0
             for x, y in self.iterator():
                 sum += x**p * y**q * self.I_mnormal(x, y)
@@ -73,6 +79,7 @@ class Image:
         m02 = moment_pq(0, 2)
 
         def central_moment_20(a, b, c):
+            """ Momentos centrales """
             return (a-(b**2/c))/(c**2)
 
         n20 = central_moment_20(m20, m10, m00)
