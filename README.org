@@ -4,9 +4,10 @@ Proyecto en python para el reconocimiento de objetos en imágenes mediante
 momentos de Hu
 
 * Requisitos
-- matplotlib
-- PIL
-- numpy
+- Matplotlib
+- Pillow
+- Numpy
+
 Estas bibliotecas sólo se utilizan para el proceso de convertir una imagen en
 una matriz y para almacenar una matriz como un archivo de imagen, el código que
 implementa todos los algoritmos necesarios para este proyecto fue desarrollado
