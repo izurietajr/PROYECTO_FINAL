@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-import matplotlib.image as img
+import matplotlib.image as plt_img
+import numpy as np
 from PIL import Image as pil_image
 from functools import reduce
-import numpy as np
+from math import sqrt
 
 
 class Image:
@@ -15,7 +16,7 @@ class Image:
 
     def load_file(self, route):
         self.route = route
-        self.image = img.imread(route)
+        self.image = plt_img.imread(route)
         self.array = self.image.tolist()
         self.height, self.width, self.dat = self.image.shape
 
@@ -76,7 +77,8 @@ class Image:
 
         n20 = central_moment_20(m20, m10, m00)
         n02 = central_moment_20(m02, m01, m00)
-        n11 = central_moment_20(m11, m10*m01, m00)
+        n11 = central_moment_20(m11, sqrt(m10*m01), m00)
 
-        self.phi1, self.phi2 = (n20+n02, (n20-n02)**2+4*n11**2)
-        return (self.phi1, self.phi2)
+        self.X, self.Y = (n20+n02, sqrt((n20-n02)**2+4*(n11**2)))
+
+        return (self.X, self.Y)
