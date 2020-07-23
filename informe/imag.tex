@@ -1,4 +1,4 @@
-% Created 2020-07-22 Wed 21:23
+% Created 2020-07-23 Thu 02:06
 % Intended LaTeX compiler: pdflatex
 \documentclass[letter]{article}
 \usepackage[utf8]{inputenc}
@@ -46,7 +46,7 @@
 \maketitle
 
 \section{Introducción}
-\label{sec:orge532d11}
+\label{sec:org6719cc1}
 El reconocimiento de objetos es la tarea de encontrar e identificar
 automáticamente objetos en una imagen. Los humanos detectamos y reconocemos
 objetos en imágenes con extrema facilidad, inclusive si los objetos sufren
@@ -54,9 +54,9 @@ variaciones de forma, tamaño, localización, color, textura, brillo o están
 parcialmente obstruidos.
 
 \section{Objetivos}
-\label{sec:orgec8fe82}
+\label{sec:orgb571ec8}
 \subsection{Objetivo general}
-\label{sec:orga3f3717}
+\label{sec:org6b8c26c}
 \begin{itemize}
 \item Desarrollo de una biblioteca para reconocimiento de objetos en imágenes sin
 hacer uso de métodos avanzados de inteligencia artificial como redes
@@ -64,7 +64,7 @@ neuronales.
 \end{itemize}
 
 \subsection{Objetivos específicos}
-\label{sec:orge13e107}
+\label{sec:org179c8e9}
 \begin{itemize}
 \item Desarrollo de una biblioteca que permita una cómoda manipulación de imágenes
 para su procesamiento.
@@ -75,7 +75,7 @@ un caso específico.
 \end{itemize}
 
 \section{Fundamentos teóricos}
-\label{sec:orgd8c807e}
+\label{sec:org46c3e8e}
 Primeramente definiremos algunos conceptos que utilizaremos en el desarrollo del
 proyecto. Para el tratamiento de una imagen digital, la representaremos como una
 función de la posición de sus pixeles como sigue:
@@ -90,14 +90,14 @@ los colores rojo, verde y azul. En el caso de una imagen digital, estos valores
 varían en el rango \([0,255]\in \mathbb N\).
 
 \section{Desarrollo}
-\label{sec:org1ea5792}
+\label{sec:org705fda3}
 El proyecto no contará con una interfaz gráfica, sino que constará de un
 notebook interactivo de jupyter en el que se podrá apreciar tanto el código
 fuente como los resultados de cada paso del proceso de manipulado de las
 imágenes. Para esto, se desarrollan las siguientes bibliotecas:
 
 \subsection{Clase Image}
-\label{sec:orgdc70db8}
+\label{sec:org18ec30b}
 La clase imagen es una abstracción básica que nos permitirá acceder y manipular
 fácilmente una imagen que puede ser cargada desde un archivo, o puede ser creada
 desde un array y posteriormente mostrada en un notebook de jupyter.
@@ -134,26 +134,26 @@ sobre cada píxel de la imagen.
 función que se envía como parámetro, la función recibirá una tupla de 3
 valores y debe devolver una tupla de 3 valores. Esta función nos permitirá
 recorrer la totalidad de la imagen aplicando en cada pixel la función \texttt{func},
-por ejemplo el código \texttt{img2.map\_over(lambda x, y, z: (x, x, x))} ejecutado
+por ejemplo el código \texttt{img.map\_over(lambda x, y, z: (x, x, x))} ejecutado
 sobre una imagen img2, permitirá cambiar el valor de cada canal por su valor
 rojo, lo que convertirá a la imagen a blanco y negro.
 \end{description}
 
 \subsection{Preprocesamiento}
-\label{sec:org4d919a7}
+\label{sec:orgb4e4ab9}
 
 \subsubsection{Reducción de ruido}
-\label{sec:org7870210}
+\label{sec:org508f02e}
 \subsubsection{Corrección de iluminación}
-\label{sec:org91ecf6b}
+\label{sec:org0ac49c2}
 
 \subsection{Segmentación}
-\label{sec:orgeb5658b}
+\label{sec:org16058d6}
 
 \subsection{Procesamiento}
-\label{sec:org6dcb29c}
+\label{sec:orge8d8900}
 \subsubsection{Momentos de Hu}
-\label{sec:org07f48aa}
+\label{sec:org1b75ed7}
 Para obtener un valor propio de la forma geométrica de un objeto en una imagen,
 usaremos momentos de Hu o momentos invariantes, un algoritmo que nos permite
 obtener un conjunto de valores asignados a una matriz según la disposición que
@@ -176,37 +176,37 @@ m_{pq} = \sum_x \sum_y x^p y^q I(x, y)
 $$
 
 \subsubsection{Extracción de rasgos}
-\label{sec:org36cd112}
+\label{sec:org4afb5fa}
 
 \subsubsection{Datos de comparación}
-\label{sec:org355d96f}
+\label{sec:org937b601}
 
 \subsubsection{Comparación y clasificación}
-\label{sec:orgd55ea64}
+\label{sec:org7b26736}
 
 \section{Pruebas}
-\label{sec:org7fcc378}
+\label{sec:orgb82c766}
 
 \section{Conclusiones}
-\label{sec:orgd049503}
+\label{sec:orge31a72d}
 
 \section{Referencias}
-\label{sec:orge8d075a}
+\label{sec:orgf761fac}
 
 \section{Anexos}
-\label{sec:org490c210}
+\label{sec:org2923473}
 \subsection{Código fuente}
-\label{sec:org30d0faa}
+\label{sec:org8605cfc}
 \subsubsection{Clase Imagen}
-\label{sec:org77e3f82}
+\label{sec:orgf426849}
 \subsubsection{Filtrado ADF}
-\label{sec:org389c84b}
+\label{sec:orga277585}
 \subsubsection{Filtrado Top-Hat}
-\label{sec:orgcc21299}
+\label{sec:org60eefe0}
 \subsubsection{Filtrado Otsu}
-\label{sec:org20f3391}
+\label{sec:org5e25457}
 \subsubsection{Momentos de Hu}
-\label{sec:org22e33f1}
+\label{sec:org3f7e957}
 Obtención de momentos geométricos de orden \(p+q\), \(m_{pq} = \sum_x \sum_y x^p y^q I(x, y)\).
 
 \begin{verbatim}
@@ -215,8 +215,8 @@ def m_pq():
 \end{verbatim}
 
 \subsubsection{KNN}
-\label{sec:org3a57128}
+\label{sec:org236f6c6}
 
 \subsection{Resultados}
-\label{sec:org4de11a3}
+\label{sec:orgfe020a8}
 \end{document}

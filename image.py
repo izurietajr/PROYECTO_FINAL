@@ -79,6 +79,6 @@ class Image:
         n02 = central_moment_20(m02, m01, m00)
         n11 = central_moment_20(m11, sqrt(m10*m01), m00)
 
-        self.X, self.Y = (n20+n02, sqrt((n20-n02)**2+4*(n11**2)))
+        self.X, self.Y = (n20+n02, (n20-n02)**2+4*(n11**2))
 
         return (self.X, self.Y)
