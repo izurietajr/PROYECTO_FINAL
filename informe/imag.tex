@@ -1,4 +1,4 @@
-% Created 2020-07-24 Fri 13:55
+% Created 2020-07-24 Fri 14:31
 % Intended LaTeX compiler: pdflatex
 \documentclass[letter]{article}
 \usepackage[utf8]{inputenc}
@@ -33,10 +33,10 @@
 \newcommand{\hright}{INF 324}
 \author{Jesus Rodolfo Izurieta Veliz}
 \date{\today}
-\title{Clasificación morfológica foliar mediante análisis de imágenes}
+\title{Clasificación morfológica foliar mediante procesamiento de imágenes}
 \hypersetup{
  pdfauthor={Jesus Rodolfo Izurieta Veliz},
- pdftitle={Clasificación morfológica foliar mediante análisis de imágenes},
+ pdftitle={Clasificación morfológica foliar mediante procesamiento de imágenes},
  pdfkeywords={},
  pdfsubject={},
  pdfcreator={Emacs 26.3 (Org mode 9.4)}, 
@@ -56,7 +56,7 @@ número reducido de imágenes de prueba.
 \end{abstract}
 
 \section{Introducción}
-\label{sec:org7011142}
+\label{sec:orga5e6af1}
 Las redes neuronales son en general una solución eficiente para el problema de
 reconocimiento de objetos en imágenes, especialmente en casos en que el objeto
 que se quiere obtener de una imagen puede encontrarse en muchas posiciones y
@@ -84,9 +84,9 @@ binarización de imágenes Otsu, que nos permite separar objetos en una imagen
 según la disposición del histograma de la imagen.
 
 \subsection{Objetivos}
-\label{sec:org6d3ed51}
+\label{sec:org5f3c31a}
 \subsubsection{Objetivo general}
-\label{sec:org392cfd0}
+\label{sec:org6e8ed3b}
 \begin{itemize}
 \item Desarrollo de una biblioteca para reconocer y clasificar hojas de plantas en
 imágenes sin hacer uso de métodos avanzados de inteligencia artificial como
@@ -94,7 +94,7 @@ redes neuronales.
 \end{itemize}
 
 \subsubsection{Objetivos específicos}
-\label{sec:orgae2bfe3}
+\label{sec:org8660eb7}
 \begin{itemize}
 \item Desarrollo de una biblioteca que permita una cómoda manipulación de imágenes
 para su procesamiento.
@@ -105,7 +105,7 @@ este caso específico.
 \end{itemize}
 
 \section{Metodología}
-\label{sec:org3bb9ba2}
+\label{sec:org82e7fbf}
 Este trabajo constituye un análisis descriptivo de la aplicación de diversos
 métodos de procesamiento de imágenes, que son aplicados a este problema
 específico para comprobar sus resultados. Se parte de la hipótesis inductiva de
@@ -127,15 +127,29 @@ procesamiento de imágenes, por lo tanto, la imagen de prueba pasará de forma
 secuencial por cada uno de estos procesos, siendo la salida de uno, la entrada
 del siguiente.
 
+El proceso de binarización de una imagen nos permite separar los objetos de
+interés de una fotografía, para esto usamos la técnica de filtrado Otsu, que
+analiza el histograma de la imagen encontrando un punto medio desde el cual
+podremos separar grupos de objetos por colores. Para la descripción morfológica,
+usamos momentos invariantes de Hu, una técnica que permite describir la forma de
+una imagen mediante valores numéricos que no varían ante transformaciones
+simples como escalado o rotación. Se analizan estadísticamente dos momentos de
+Hu (\(\phi1\) y \(\phi2\)) para cada tipo de hoja de un conjunto de imágenes de
+prueba, con la finalidad de poder determinar áreas en el plano \(\phi1\), \(\phi2\)
+en que se encuentre cada tipo de hoja. Finalmente comparamos la posición en el
+plano de los momentos obtenidos de una imagen para poder clasificarla en uno de
+estos grupos con cierta probabilidad de pertenencia según su distancia al
+centro de gravedad de cada conjunto.
+
 \section{Desarrollo}
-\label{sec:org0e09a03}
+\label{sec:org1a43470}
 El proyecto no contará con una interfaz gráfica, sino que constará de un
 notebook interactivo de jupyter en el que se podrá apreciar tanto el código
 fuente como los resultados de cada paso del proceso de manipulado de las
 imágenes. Para esto, se desarrollan las siguientes bibliotecas:
 
 \subsection{Representación de imágenes}
-\label{sec:org5c1cd88}
+\label{sec:orgf447118}
 Primeramente definiremos algunos conceptos que utilizaremos en el desarrollo del
 proyecto. Para el tratamiento de una imagen digital, la representaremos como una
 función de la posición de sus pixeles como sigue:
@@ -150,7 +164,7 @@ los colores rojo, verde y azul. En el caso de una imagen digital, estos valores
 varían en el rango \([0,255]\in \mathbb N\).
 
 \subsection{Biblioteca Image}
-\label{sec:orgf33c558}
+\label{sec:org9c4ffb4}
 La clase imagen es una abstracción básica que nos permitirá acceder y manipular
 fácilmente una imagen que puede ser cargada desde un archivo, o puede ser creada
 desde un array y posteriormente mostrada en un notebook de jupyter.
@@ -193,22 +207,22 @@ rojo, lo que convertirá a la imagen a blanco y negro.
 \end{description}
 
 \subsection{Preprocesamiento}
-\label{sec:orga2a7e6d}
+\label{sec:orgee49ef7}
 
 \subsubsection{Reducción de ruido}
-\label{sec:org0ec6b4d}
+\label{sec:orgb7aedfa}
 \subsubsection{Corrección de iluminación}
-\label{sec:org26091c3}
+\label{sec:org1192fee}
 
 \subsubsection{Segmentación}
-\label{sec:orgff7a10d}
+\label{sec:org733a89d}
 
 \subsection{Procesamiento}
-\label{sec:orga936326}
+\label{sec:org6e124dd}
 \subsubsection{Filtrado Otsu}
-\label{sec:org3076526}
+\label{sec:org0bf2366}
 \subsubsection{Momentos de Hu}
-\label{sec:orgf68f8cc}
+\label{sec:org652ca22}
 Para obtener un valor propio de la forma geométrica de un objeto en una imagen,
 usaremos momentos de Hu o momentos invariantes, un algoritmo que nos permite
 obtener un conjunto de valores asignados a una matriz según la disposición que
@@ -231,27 +245,27 @@ m_{pq} = \sum_x \sum_y x^p y^q I(x, y)
 $$
 
 \subsubsection{Datos de comparación}
-\label{sec:org8eb95a7}
+\label{sec:org2becf73}
 
 \subsubsection{Comparación y clasificación}
-\label{sec:org0ec4f85}
+\label{sec:org7b423d9}
 
 \subsection{Resultados}
-\label{sec:orgfe45e77}
+\label{sec:orged90042}
 \subsection{Evaluación}
-\label{sec:org57d28c2}
+\label{sec:org1edf791}
 \section{Conclusiones}
-\label{sec:org05725fb}
+\label{sec:org52c653e}
 
 \section{Referencias}
-\label{sec:orgd5249b6}
+\label{sec:orge959828}
 
 \section{Anexos}
-\label{sec:org71c7c6a}
+\label{sec:org0fff2f5}
 \subsection{Código fuente}
-\label{sec:orgfd01262}
+\label{sec:orgf3df342}
 \subsubsection{Biblioteca Imagen}
-\label{sec:org01aef9b}
+\label{sec:orgc7a98aa}
 \begin{verbatim}
 #!/usr/bin/env python3
 import matplotlib.image as plt_img
@@ -357,19 +371,7 @@ class Image:
         return (self.X, self.Y)
 \end{verbatim}
 \subsection{Pruebas y resultados}
-\label{sec:org9c0058c}
-Contenido de esta wea
+\label{sec:orgf909027}
 \subsubsection{Momentos invariantes de Hu}
-\label{sec:orgcabea5c}
-Contenido de esta wea
-\begin{enumerate}
-\item nippa1
-\label{sec:org9f7f626}
-Contenido de esta wea
-\begin{enumerate}
-\item nippa2
-\label{sec:org832cd46}
-Contenido de esta wea
-\end{enumerate}
-\end{enumerate}
+\label{sec:orgbb1ddc8}
 \end{document}

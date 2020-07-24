@@ -1,4 +1,4 @@
-#+TITLE: Clasificación morfológica foliar mediante análisis de imágenes
+#+TITLE: Clasificación morfológica foliar mediante procesamiento de imágenes
 #+include: ~/org/templates/tarea.org
 #+latex_header: \newcommand{\hleft}{Procesamiento de imágenes}
 #+latex_header: \newcommand{\hright}{INF 324}
@@ -77,6 +77,20 @@ Cada uno de estos pasos implementa de forma independiente una técnica de
 procesamiento de imágenes, por lo tanto, la imagen de prueba pasará de forma
 secuencial por cada uno de estos procesos, siendo la salida de uno, la entrada
 del siguiente.
+
+El proceso de binarización de una imagen nos permite separar los objetos de
+interés de una fotografía, para esto usamos la técnica de filtrado Otsu, que
+analiza el histograma de la imagen encontrando un punto medio desde el cual
+podremos separar grupos de objetos por colores. Para la descripción morfológica,
+usamos momentos invariantes de Hu, una técnica que permite describir la forma de
+una imagen mediante valores numéricos que no varían ante transformaciones
+simples como escalado o rotación. Se analizan estadísticamente dos momentos de
+Hu ($\phi1$ y $\phi2$) para cada tipo de hoja de un conjunto de imágenes de
+prueba, con la finalidad de poder determinar áreas en el plano $\phi1$, $\phi2$
+en que se encuentre cada tipo de hoja. Finalmente comparamos la posición en el
+plano de los momentos obtenidos de una imagen para poder clasificarla en uno de
+estos grupos con cierta probabilidad de pertenencia según su distancia al
+centro de gravedad de cada conjunto.
 
 * Desarrollo
 El proyecto no contará con una interfaz gráfica, sino que constará de un
