@@ -1,0 +1,22 @@
+#+TITLE: Fichas Bibliográficas del proyecto de investigación
+
+* Momentos invariantes de Hu
+:PROPERTIES:
+:title: Visual pattern recognition by moment invariants
+:author: Ming Kuei Hu
+:doi: doi:10.1109/TIT.1962.1057692
+:END:
+** Momentos de orden (p+q)
+
+$$
+m_{pq} =  \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} x^p y^q p(x, y)\,dx\,dy \quad p, q = 0, 1, 2, ...
+$$
+
+** Momentos centrales
+
+$$
+m_{pq} = \sum_x \sum_y x^p y^q I(x, y)
+$$
+
+* Filtrado de Otsu
+* Clustering
