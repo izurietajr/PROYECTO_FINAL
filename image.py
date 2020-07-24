@@ -61,9 +61,20 @@ class Image:
         for x, y in self.iterator():
             self.array[x][y] = func(*self.I(x, y))
 
+    def crop(self, x1, y1, x2, y2):
+        cropped_array = []
+        for i in range(y1, y2):
+            arr = []
+            for j in range(x1, x2):
+                arr.append(self.I(i, j))
+            cropped_array.append(arr)
+        cropped_image = Image()
+        cropped_image.load_array(cropped_array)
+        return cropped_image
+
 
     def hu_moments(self):
-
+        """ Primeros dos momentos de Hu """
         def moment_pq(p, q):
             """ Momentos geométricos """
             sum = 0
