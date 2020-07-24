@@ -1,4 +1,4 @@
-% Created 2020-07-23 Thu 23:55
+% Created 2020-07-24 Fri 13:55
 % Intended LaTeX compiler: pdflatex
 \documentclass[letter]{article}
 \usepackage[utf8]{inputenc}
@@ -33,10 +33,10 @@
 \newcommand{\hright}{INF 324}
 \author{Jesus Rodolfo Izurieta Veliz}
 \date{\today}
-\title{Clasificación automática de tipos de hojas en imágenes}
+\title{Clasificación morfológica foliar mediante análisis de imágenes}
 \hypersetup{
  pdfauthor={Jesus Rodolfo Izurieta Veliz},
- pdftitle={Clasificación automática de tipos de hojas en imágenes},
+ pdftitle={Clasificación morfológica foliar mediante análisis de imágenes},
  pdfkeywords={},
  pdfsubject={},
  pdfcreator={Emacs 26.3 (Org mode 9.4)}, 
@@ -50,13 +50,13 @@ ampliamente estudiado en la actualidad, y cuando es necesario aplicarlo, en
 general suele pensarse en una solución que implemente redes neuronales y una
 gran cantidad de imágenes de prueba para entrenarlas, sin embargo, en algunos
 casos específicos, este problema puede tener soluciones más sencillas y rápidas
-de implementar. En este caso estudiaremos el problema de la clasificación
-automática de tipos de hojas, sin recurrir al uso de redes neuronales y con un
+de implementar. En este caso estudiamos el problema de la clasificación
+morfológica de hojas de plantas, sin recurrir al uso de redes neuronales y con un
 número reducido de imágenes de prueba.
 \end{abstract}
 
 \section{Introducción}
-\label{sec:orgd71040b}
+\label{sec:org7011142}
 Las redes neuronales son en general una solución eficiente para el problema de
 reconocimiento de objetos en imágenes, especialmente en casos en que el objeto
 que se quiere obtener de una imagen puede encontrarse en muchas posiciones y
@@ -83,18 +83,18 @@ posible, por lo que utilizamos también técnicas de preprocesado de imágenes c
 binarización de imágenes Otsu, que nos permite separar objetos en una imagen
 según la disposición del histograma de la imagen.
 
-\section{Objetivos}
-\label{sec:org6b9ae54}
-\subsection{Objetivo general}
-\label{sec:orge77b444}
+\subsection{Objetivos}
+\label{sec:org6d3ed51}
+\subsubsection{Objetivo general}
+\label{sec:org392cfd0}
 \begin{itemize}
 \item Desarrollo de una biblioteca para reconocer y clasificar hojas de plantas en
 imágenes sin hacer uso de métodos avanzados de inteligencia artificial como
 redes neuronales.
 \end{itemize}
 
-\subsection{Objetivos específicos}
-\label{sec:org4b5f681}
+\subsubsection{Objetivos específicos}
+\label{sec:orgae2bfe3}
 \begin{itemize}
 \item Desarrollo de una biblioteca que permita una cómoda manipulación de imágenes
 para su procesamiento.
@@ -104,8 +104,38 @@ diferentes algoritmos de preprocesamiento de imágenes.
 este caso específico.
 \end{itemize}
 
-\section{Fundamento teórico}
-\label{sec:orga23ed81}
+\section{Metodología}
+\label{sec:org3bb9ba2}
+Este trabajo constituye un análisis descriptivo de la aplicación de diversos
+métodos de procesamiento de imágenes, que son aplicados a este problema
+específico para comprobar sus resultados. Se parte de la hipótesis inductiva de
+que las técnicas usadas nos servirán para conseguir los objetivos de este
+proyecto. Estas técnicas que fueron diseñadas para diferentes etapas del
+procesamiento de imágenes, pueden aplicarse secuencialmente, ya que cada una
+corresponde a una tarea específica que será complementada por las demás.
+
+Seguimos entonces una secuencia de acciones con la finalidad de cumplir el
+objetivo de clasificar una hoja en una imagen digital, siguiendo los pasos como
+se muestra a continuación:
+
+\begin{center}
+\textbf{Binarización de la imagen} \(\rightarrow\) \textbf{Descripción morfológica} \(\rightarrow\) \textbf{Clasificación} \(\rightarrow\) \textbf{Comparación}
+\end{center}
+
+Cada uno de estos pasos implementa de forma independiente una técnica de
+procesamiento de imágenes, por lo tanto, la imagen de prueba pasará de forma
+secuencial por cada uno de estos procesos, siendo la salida de uno, la entrada
+del siguiente.
+
+\section{Desarrollo}
+\label{sec:org0e09a03}
+El proyecto no contará con una interfaz gráfica, sino que constará de un
+notebook interactivo de jupyter en el que se podrá apreciar tanto el código
+fuente como los resultados de cada paso del proceso de manipulado de las
+imágenes. Para esto, se desarrollan las siguientes bibliotecas:
+
+\subsection{Representación de imágenes}
+\label{sec:org5c1cd88}
 Primeramente definiremos algunos conceptos que utilizaremos en el desarrollo del
 proyecto. Para el tratamiento de una imagen digital, la representaremos como una
 función de la posición de sus pixeles como sigue:
@@ -119,15 +149,8 @@ color, tendremos en su lugar una tupla de tres elementos, uno para cada uno de
 los colores rojo, verde y azul. En el caso de una imagen digital, estos valores
 varían en el rango \([0,255]\in \mathbb N\).
 
-\section{Desarrollo}
-\label{sec:org42dce0f}
-El proyecto no contará con una interfaz gráfica, sino que constará de un
-notebook interactivo de jupyter en el que se podrá apreciar tanto el código
-fuente como los resultados de cada paso del proceso de manipulado de las
-imágenes. Para esto, se desarrollan las siguientes bibliotecas:
-
-\subsection{Clase Image}
-\label{sec:orgbff65cf}
+\subsection{Biblioteca Image}
+\label{sec:orgf33c558}
 La clase imagen es una abstracción básica que nos permitirá acceder y manipular
 fácilmente una imagen que puede ser cargada desde un archivo, o puede ser creada
 desde un array y posteriormente mostrada en un notebook de jupyter.
@@ -170,20 +193,22 @@ rojo, lo que convertirá a la imagen a blanco y negro.
 \end{description}
 
 \subsection{Preprocesamiento}
-\label{sec:orgbd9c22c}
+\label{sec:orga2a7e6d}
 
 \subsubsection{Reducción de ruido}
-\label{sec:org79e4249}
+\label{sec:org0ec6b4d}
 \subsubsection{Corrección de iluminación}
-\label{sec:org8b41049}
+\label{sec:org26091c3}
 
-\subsection{Segmentación}
-\label{sec:orgfd6c981}
+\subsubsection{Segmentación}
+\label{sec:orgff7a10d}
 
 \subsection{Procesamiento}
-\label{sec:orgd36383b}
+\label{sec:orga936326}
+\subsubsection{Filtrado Otsu}
+\label{sec:org3076526}
 \subsubsection{Momentos de Hu}
-\label{sec:orgcec5b6c}
+\label{sec:orgf68f8cc}
 Para obtener un valor propio de la forma geométrica de un objeto en una imagen,
 usaremos momentos de Hu o momentos invariantes, un algoritmo que nos permite
 obtener un conjunto de valores asignados a una matriz según la disposición que
@@ -205,48 +230,146 @@ $$
 m_{pq} = \sum_x \sum_y x^p y^q I(x, y)
 $$
 
-\subsubsection{Extracción de rasgos}
-\label{sec:org8386bfc}
-
 \subsubsection{Datos de comparación}
-\label{sec:org54384cf}
+\label{sec:org8eb95a7}
 
 \subsubsection{Comparación y clasificación}
-\label{sec:org70a0e92}
-
-\section{Pruebas}
-\label{sec:org2991437}
-
-\section{Conclusiones}
-\label{sec:orga286011}
-
-\section{Referencias}
-\label{sec:org79d5d72}
-
-\section{Anexos}
-\label{sec:org6a42df8}
-\subsection{Código fuente}
-\label{sec:orgc4d2071}
-\subsubsection{Clase Imagen}
-\label{sec:orgb3689cf}
-\subsubsection{Filtrado ADF}
-\label{sec:orge988242}
-\subsubsection{Filtrado Top-Hat}
-\label{sec:orgb9b8f57}
-\subsubsection{Filtrado Otsu}
-\label{sec:org30b235d}
-\subsubsection{Momentos de Hu}
-\label{sec:org3dd3a15}
-Obtención de momentos geométricos de orden \(p+q\), \(m_{pq} = \sum_x \sum_y x^p y^q I(x, y)\).
-
-\begin{verbatim}
-def m_pq():
-   
-\end{verbatim}
-
-\subsubsection{KNN}
-\label{sec:org9de9874}
+\label{sec:org0ec4f85}
 
 \subsection{Resultados}
-\label{sec:orgbdf9a1b}
+\label{sec:orgfe45e77}
+\subsection{Evaluación}
+\label{sec:org57d28c2}
+\section{Conclusiones}
+\label{sec:org05725fb}
+
+\section{Referencias}
+\label{sec:orgd5249b6}
+
+\section{Anexos}
+\label{sec:org71c7c6a}
+\subsection{Código fuente}
+\label{sec:orgfd01262}
+\subsubsection{Biblioteca Imagen}
+\label{sec:org01aef9b}
+\begin{verbatim}
+#!/usr/bin/env python3
+import matplotlib.image as plt_img
+import numpy as np
+from PIL import Image as pil_image
+from functools import reduce
+from math import sqrt
+
+
+class Image:
+
+    def __init__(self):
+        self.route = "."
+        self.image = None
+        self.array = None
+        self.height, self.width, self.dat = (0,0,0)
+
+    def load_file(self, route):
+        self.route = route
+        self.image = plt_img.imread(route)
+        self.array = self.image.tolist()
+        self.height, self.width, self.dat = self.image.shape
+
+    def load_array(self, array):
+        self.array = array
+        self.height = len(array)
+        self.width = len(array[0])
+
+    def I(self, x, y):
+        """ Devuelve rgb en x, y """
+        return tuple(self.array[x][y])
+
+    def I_m(self, x, y, color=0):
+        """ Devuelve un color de x, y """
+        triple = self.array[x][y]
+        return triple[color]
+
+    def I_normal(self, x, y):
+        """ Devuelve rgb en [0, 1] """
+        (i, j, k) = self.I(x, y)
+        return (i/255, j/255, k/255)
+
+    def I_mnormal(self, x, y, color=0):
+        """ Devuelve color en [0, 1] """
+        i = self.I_m(x, y, color)
+        return i/255
+
+    def show(self, route=None):
+        if route:
+            self.route = route
+        image_arr = np.asarray(self.array, dtype="uint8")
+        img_file = pil_image.fromarray(image_arr, 'RGB')
+        return img_file
+
+    def iterator(self):
+        for i in range(self.height):
+            for j in range(self.width):
+                yield (i,j)
+
+    def map_over(self, func):
+        """ Ejecución de func sobre cada pixel """
+        for x, y in self.iterator():
+            self.array[x][y] = func(*self.I(x, y))
+
+    def crop(self, x1, y1, x2, y2):
+        cropped_array = []
+        for i in range(y1, y2):
+            arr = []
+            for j in range(x1, x2):
+                arr.append(self.I(i, j))
+            cropped_array.append(arr)
+        cropped_image = Image()
+        cropped_image.load_array(cropped_array)
+        return cropped_image
+
+
+    def hu_moments(self):
+        """ Primeros dos momentos de Hu """
+        def moment_pq(p, q):
+            """ Momentos geométricos """
+            sum = 0
+            for x, y in self.iterator():
+                sum += x**p * y**q * self.I_mnormal(x, y)
+            return sum
+
+        m00 = moment_pq(0, 0)
+        m01 = moment_pq(0, 1)
+        m11 = moment_pq(1, 1)
+        m10 = moment_pq(1, 0)
+        m20 = moment_pq(2, 0)
+        m02 = moment_pq(0, 2)
+
+        def central_moment_20(a, b, c):
+            """ Momentos centrales """
+            return (a-(b**2/c))/(c**2)
+
+        n20 = central_moment_20(m20, m10, m00)
+        n02 = central_moment_20(m02, m01, m00)
+        n11 = central_moment_20(m11, sqrt(m10*m01), m00)
+
+        self.X, self.Y = (n20+n02, (n20-n02)**2+4*(n11**2))
+
+        return (self.X, self.Y)
+\end{verbatim}
+\subsection{Pruebas y resultados}
+\label{sec:org9c0058c}
+Contenido de esta wea
+\subsubsection{Momentos invariantes de Hu}
+\label{sec:orgcabea5c}
+Contenido de esta wea
+\begin{enumerate}
+\item nippa1
+\label{sec:org9f7f626}
+Contenido de esta wea
+\begin{enumerate}
+\item nippa2
+\label{sec:org832cd46}
+Contenido de esta wea
+\end{enumerate}
+\end{enumerate}
 \end{document}

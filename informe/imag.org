@@ -1,4 +1,4 @@
-#+TITLE: Clasificación automática de tipos de hojas en imágenes
+#+TITLE: Clasificación morfológica foliar mediante análisis de imágenes
 #+include: ~/org/templates/tarea.org
 #+latex_header: \newcommand{\hleft}{Procesamiento de imágenes}
 #+latex_header: \newcommand{\hright}{INF 324}
@@ -10,8 +10,8 @@ ampliamente estudiado en la actualidad, y cuando es necesario aplicarlo, en
 general suele pensarse en una solución que implemente redes neuronales y una
 gran cantidad de imágenes de prueba para entrenarlas, sin embargo, en algunos
 casos específicos, este problema puede tener soluciones más sencillas y rápidas
-de implementar. En este caso estudiaremos el problema de la clasificación
-automática de tipos de hojas, sin recurrir al uso de redes neuronales y con un
+de implementar. En este caso estudiamos el problema de la clasificación
+morfológica de hojas de plantas, sin recurrir al uso de redes neuronales y con un
 número reducido de imágenes de prueba.
 \end{abstract}
 
@@ -42,13 +42,13 @@ posible, por lo que utilizamos también técnicas de preprocesado de imágenes c
 binarización de imágenes Otsu, que nos permite separar objetos en una imagen
 según la disposición del histograma de la imagen.
 
-* Objetivos
-** Objetivo general
+** Objetivos
+*** Objetivo general
 - Desarrollo de una biblioteca para reconocer y clasificar hojas de plantas en
   imágenes sin hacer uso de métodos avanzados de inteligencia artificial como
   redes neuronales.
 
-** Objetivos específicos
+*** Objetivos específicos
 - Desarrollo de una biblioteca que permita una cómoda manipulación de imágenes
   para su procesamiento.
 - Expansión de la biblioteca de procesamiento de imágenes implementando
@@ -56,7 +56,35 @@ según la disposición del histograma de la imagen.
 - Desarrollo de un notebook destallando paso a paso el uso de la biblioteca para
   este caso específico.
 
-* Fundamento teórico
+* Metodología
+Este trabajo constituye un análisis descriptivo de la aplicación de diversos
+métodos de procesamiento de imágenes, que son aplicados a este problema
+específico para comprobar sus resultados. Se parte de la hipótesis inductiva de
+que las técnicas usadas nos servirán para conseguir los objetivos de este
+proyecto. Estas técnicas que fueron diseñadas para diferentes etapas del
+procesamiento de imágenes, pueden aplicarse secuencialmente, ya que cada una
+corresponde a una tarea específica que será complementada por las demás.
+
+Seguimos entonces una secuencia de acciones con la finalidad de cumplir el
+objetivo de clasificar una hoja en una imagen digital, siguiendo los pasos como
+se muestra a continuación:
+
+#+begin_center
+*Binarización de la imagen* \rightarrow *Descripción morfológica* \rightarrow *Clasificación* \rightarrow *Comparación*
+#+end_center
+
+Cada uno de estos pasos implementa de forma independiente una técnica de
+procesamiento de imágenes, por lo tanto, la imagen de prueba pasará de forma
+secuencial por cada uno de estos procesos, siendo la salida de uno, la entrada
+del siguiente.
+
+* Desarrollo
+El proyecto no contará con una interfaz gráfica, sino que constará de un
+notebook interactivo de jupyter en el que se podrá apreciar tanto el código
+fuente como los resultados de cada paso del proceso de manipulado de las
+imágenes. Para esto, se desarrollan las siguientes bibliotecas:
+
+** Representación de imágenes
 Primeramente definiremos algunos conceptos que utilizaremos en el desarrollo del
 proyecto. Para el tratamiento de una imagen digital, la representaremos como una
 función de la posición de sus pixeles como sigue:
@@ -70,13 +98,7 @@ color, tendremos en su lugar una tupla de tres elementos, uno para cada uno de
 los colores rojo, verde y azul. En el caso de una imagen digital, estos valores
 varían en el rango $[0,255]\in \mathbb N$.
 
-* Desarrollo
-El proyecto no contará con una interfaz gráfica, sino que constará de un
-notebook interactivo de jupyter en el que se podrá apreciar tanto el código
-fuente como los resultados de cada paso del proceso de manipulado de las
-imágenes. Para esto, se desarrollan las siguientes bibliotecas:
-
-** Clase Image
+** Biblioteca Image
 La clase imagen es una abstracción básica que nos permitirá acceder y manipular
 fácilmente una imagen que puede ser cargada desde un archivo, o puede ser creada
 desde un array y posteriormente mostrada en un notebook de jupyter.
@@ -85,10 +107,10 @@ desde un array y posteriormente mostrada en un notebook de jupyter.
   encuentra en la ruta y la convierte en una matriz de tuplas de 3 componentes,
   uno por cada color RGB, almacenándola en el atributo =array= de la clase
   imagen, además define otros atributos como las dimensiones de la imagen.
- 
+
 - Load array: :: (Parámetros: array) Almacena una matriz en el atributo =array=
   de la imagen, la matriz debe ser una matriz de tuplas de tres valores.
- 
+
 - Show: :: Retorna un objeto PIL.Image.Image que permite visualizar la imagen en
   un notebook de jupyter o almacenarla como un archivo.
 
@@ -97,17 +119,17 @@ desde un array y posteriormente mostrada en un notebook de jupyter.
 
 - I normal: :: (Parámetros: x, y) Igual que I() pero en lugar de retornar
   valores en el rango [0, 255] normaliza los valores al rango [0, 1].
- 
+
 - I m: :: (Parámetros: x, y, color) Igual que I(), pero retorna un único valor
   definido por el parámetro =color=, 0 para rojo, 1 para verde y 2 para azul, el
   valor por defecto es rojo si no se define el parámetro color.
- 
+
 - I mnormal: :: (Parámetros: x, y, color) Igual que I_m() pero con valores
   normalizados en el rango [0, 1]
 
 - Iterator: ::  Retorna un iterador de tuplas x, y que facilita iteraciones
   sobre cada píxel de la imagen.
- 
+
 - Map over: :: (Parámetros: func) Permite sobreescribir píxeles mediante una
   función que se envía como parámetro, la función recibirá una tupla de 3
   valores y debe devolver una tupla de 3 valores. Esta función nos permitirá
@@ -121,9 +143,10 @@ desde un array y posteriormente mostrada en un notebook de jupyter.
 *** Reducción de ruido
 *** Corrección de iluminación
 
-** Segmentación
+*** Segmentación
 
 ** Procesamiento
+*** Filtrado Otsu
 *** Momentos de Hu
 Para obtener un valor propio de la forma geométrica de un objeto en una imagen,
 usaremos momentos de Hu o momentos invariantes, un algoritmo que nos permite
@@ -146,32 +169,19 @@ $$
 m_{pq} = \sum_x \sum_y x^p y^q I(x, y)
 $$
 
-*** Extracción de rasgos
-
 *** Datos de comparación
 
 *** Comparación y clasificación
 
-* Pruebas
-
+** Resultados
+** Evaluación
 * Conclusiones
 
 * Referencias
 
 * Anexos
 ** Código fuente
-*** Clase Imagen
-*** Filtrado ADF
-*** Filtrado Top-Hat
-*** Filtrado Otsu
-*** Momentos de Hu
-Obtención de momentos geométricos de orden $p+q$, $m_{pq} = \sum_x \sum_y x^p y^q I(x, y)$.
-
-#+begin_src python
-def m_pq():
-   
-#+end_src
-
-*** KNN
-
-** Resultados
+*** Biblioteca Imagen
+#+include: ../image.py src python
+** Pruebas y resultados
+*** Momentos invariantes de Hu
