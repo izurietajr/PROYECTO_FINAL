@@ -1,4 +1,4 @@
-% Created 2020-07-23 Thu 23:49
+% Created 2020-07-23 Thu 23:55
 % Intended LaTeX compiler: pdflatex
 \documentclass[letter]{article}
 \usepackage[utf8]{inputenc}
@@ -56,7 +56,7 @@ número reducido de imágenes de prueba.
 \end{abstract}
 
 \section{Introducción}
-\label{sec:orgfcda02d}
+\label{sec:orgd71040b}
 Las redes neuronales son en general una solución eficiente para el problema de
 reconocimiento de objetos en imágenes, especialmente en casos en que el objeto
 que se quiere obtener de una imagen puede encontrarse en muchas posiciones y
@@ -84,9 +84,9 @@ binarización de imágenes Otsu, que nos permite separar objetos en una imagen
 según la disposición del histograma de la imagen.
 
 \section{Objetivos}
-\label{sec:orgc99e6ae}
+\label{sec:org6b9ae54}
 \subsection{Objetivo general}
-\label{sec:orgf501058}
+\label{sec:orge77b444}
 \begin{itemize}
 \item Desarrollo de una biblioteca para reconocer y clasificar hojas de plantas en
 imágenes sin hacer uso de métodos avanzados de inteligencia artificial como
@@ -94,7 +94,7 @@ redes neuronales.
 \end{itemize}
 
 \subsection{Objetivos específicos}
-\label{sec:orgc4911ca}
+\label{sec:org4b5f681}
 \begin{itemize}
 \item Desarrollo de una biblioteca que permita una cómoda manipulación de imágenes
 para su procesamiento.
@@ -104,8 +104,8 @@ diferentes algoritmos de preprocesamiento de imágenes.
 este caso específico.
 \end{itemize}
 
-\section{Fundamentos teóricos}
-\label{sec:orge0a9b78}
+\section{Fundamento teórico}
+\label{sec:orga23ed81}
 Primeramente definiremos algunos conceptos que utilizaremos en el desarrollo del
 proyecto. Para el tratamiento de una imagen digital, la representaremos como una
 función de la posición de sus pixeles como sigue:
@@ -120,14 +120,14 @@ los colores rojo, verde y azul. En el caso de una imagen digital, estos valores
 varían en el rango \([0,255]\in \mathbb N\).
 
 \section{Desarrollo}
-\label{sec:orge37e224}
+\label{sec:org42dce0f}
 El proyecto no contará con una interfaz gráfica, sino que constará de un
 notebook interactivo de jupyter en el que se podrá apreciar tanto el código
 fuente como los resultados de cada paso del proceso de manipulado de las
 imágenes. Para esto, se desarrollan las siguientes bibliotecas:
 
 \subsection{Clase Image}
-\label{sec:org8d4e6f3}
+\label{sec:orgbff65cf}
 La clase imagen es una abstracción básica que nos permitirá acceder y manipular
 fácilmente una imagen que puede ser cargada desde un archivo, o puede ser creada
 desde un array y posteriormente mostrada en un notebook de jupyter.
@@ -170,20 +170,20 @@ rojo, lo que convertirá a la imagen a blanco y negro.
 \end{description}
 
 \subsection{Preprocesamiento}
-\label{sec:orgdcdf52f}
+\label{sec:orgbd9c22c}
 
 \subsubsection{Reducción de ruido}
-\label{sec:orgfb7f1ff}
+\label{sec:org79e4249}
 \subsubsection{Corrección de iluminación}
-\label{sec:orgba892a6}
+\label{sec:org8b41049}
 
 \subsection{Segmentación}
-\label{sec:org60b32e5}
+\label{sec:orgfd6c981}
 
 \subsection{Procesamiento}
-\label{sec:org2ec38e4}
+\label{sec:orgd36383b}
 \subsubsection{Momentos de Hu}
-\label{sec:org3cba0a5}
+\label{sec:orgcec5b6c}
 Para obtener un valor propio de la forma geométrica de un objeto en una imagen,
 usaremos momentos de Hu o momentos invariantes, un algoritmo que nos permite
 obtener un conjunto de valores asignados a una matriz según la disposición que
@@ -206,37 +206,37 @@ m_{pq} = \sum_x \sum_y x^p y^q I(x, y)
 $$
 
 \subsubsection{Extracción de rasgos}
-\label{sec:orgdc371b9}
+\label{sec:org8386bfc}
 
 \subsubsection{Datos de comparación}
-\label{sec:org734cd57}
+\label{sec:org54384cf}
 
 \subsubsection{Comparación y clasificación}
-\label{sec:org9580a2d}
+\label{sec:org70a0e92}
 
 \section{Pruebas}
-\label{sec:orgb5b59c1}
+\label{sec:org2991437}
 
 \section{Conclusiones}
-\label{sec:org92e0ac1}
+\label{sec:orga286011}
 
 \section{Referencias}
-\label{sec:org7386212}
+\label{sec:org79d5d72}
 
 \section{Anexos}
-\label{sec:orgbe8f03c}
+\label{sec:org6a42df8}
 \subsection{Código fuente}
-\label{sec:orgc5034aa}
+\label{sec:orgc4d2071}
 \subsubsection{Clase Imagen}
-\label{sec:orgf310613}
+\label{sec:orgb3689cf}
 \subsubsection{Filtrado ADF}
-\label{sec:org8b4a4f9}
+\label{sec:orge988242}
 \subsubsection{Filtrado Top-Hat}
-\label{sec:org1996111}
+\label{sec:orgb9b8f57}
 \subsubsection{Filtrado Otsu}
-\label{sec:org3218226}
+\label{sec:org30b235d}
 \subsubsection{Momentos de Hu}
-\label{sec:org9c44482}
+\label{sec:org3dd3a15}
 Obtención de momentos geométricos de orden \(p+q\), \(m_{pq} = \sum_x \sum_y x^p y^q I(x, y)\).
 
 \begin{verbatim}
@@ -245,8 +245,8 @@ def m_pq():
 \end{verbatim}
 
 \subsubsection{KNN}
-\label{sec:orgeff09ac}
+\label{sec:org9de9874}
 
 \subsection{Resultados}
-\label{sec:orgc643ca9}
+\label{sec:orgbdf9a1b}
 \end{document}
