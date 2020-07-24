@@ -1,7 +1,14 @@
-#+TITLE: INF 324 - Proyecto de procesamiento de imágenes
+#+TITLE: Clasificación morfológica foliar
 
-Proyecto en python para el reconocimiento de objetos en imágenes mediante
-momentos de Hu
+*INF 324 - Proyecto de procesamiento de imágenes*
+
+Proyecto de clasificación automatizada de hojas de plantas según su morfología,
+mediante técnicas de procesamiento de imágenes.
+
+El informe completo se encuentra
+[aquí](https://github.com/izurietajr/image-recognition/blob/master/informe/report.pdf).
+El código de la librería desarrollada para el procesamiento de las imágenes
+[aquí](https://github.com/izurietajr/image-recognition/blob/master/image.py).
 
 * Requisitos
 - Matplotlib
