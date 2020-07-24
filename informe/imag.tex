@@ -1,4 +1,4 @@
-% Created 2020-07-23 Thu 18:40
+% Created 2020-07-23 Thu 23:49
 % Intended LaTeX compiler: pdflatex
 \documentclass[letter]{article}
 \usepackage[utf8]{inputenc}
@@ -33,10 +33,10 @@
 \newcommand{\hright}{INF 324}
 \author{Jesus Rodolfo Izurieta Veliz}
 \date{\today}
-\title{Procesamiento de imágenes}
+\title{Clasificación automática de tipos de hojas en imágenes}
 \hypersetup{
  pdfauthor={Jesus Rodolfo Izurieta Veliz},
- pdftitle={Procesamiento de imágenes},
+ pdftitle={Clasificación automática de tipos de hojas en imágenes},
  pdfkeywords={},
  pdfsubject={},
  pdfcreator={Emacs 26.3 (Org mode 9.4)}, 
@@ -44,38 +44,68 @@
 \begin{document}
 
 \maketitle
+\begin{abstract}
+El reconocimiento de objetos en imágenes y su clasificación es un problema
+ampliamente estudiado en la actualidad, y cuando es necesario aplicarlo, en
+general suele pensarse en una solución que implemente redes neuronales y una
+gran cantidad de imágenes de prueba para entrenarlas, sin embargo, en algunos
+casos específicos, este problema puede tener soluciones más sencillas y rápidas
+de implementar. En este caso estudiaremos el problema de la clasificación
+automática de tipos de hojas, sin recurrir al uso de redes neuronales y con un
+número reducido de imágenes de prueba.
+\end{abstract}
 
 \section{Introducción}
-\label{sec:org12d93c6}
-El reconocimiento de objetos es la tarea de encontrar e identificar
-automáticamente objetos en una imagen. Los humanos detectamos y reconocemos
-objetos en imágenes con extrema facilidad, inclusive si los objetos sufren
-variaciones de forma, tamaño, localización, color, textura, brillo o están
-parcialmente obstruidos.
+\label{sec:orgfcda02d}
+Las redes neuronales son en general una solución eficiente para el problema de
+reconocimiento de objetos en imágenes, especialmente en casos en que el objeto
+que se quiere obtener de una imagen puede encontrarse en muchas posiciones y
+tener una gran cantidad de variaciones, para lo cual es necesaria una gran
+cantidad de imágenes de prueba de modo que la red neuronal pueda entrenarse y
+responder apropiadamente a una gran cantidad de situaciones. En este caso, el
+problema que tratamos de resolver es de una complejidad menor y puede resolverse
+por otros medios.
+
+Para clasificar la hoja de una planta, necesitamos una forma de representar su
+forma, en este punto nos será útil el método de momentos invariantes de Hu, que
+genera valores que describen la forma de un objeto si tenemos su silueta. Los
+momentos invariantes de Hu funcionan correctamente en objetos en dos dimensiones
+y pueden darnos valores de una imagen que no varían ante transformaciones
+simples como escalado o rotación, sin embargo, no nos serán útiles para
+transformaciones en tres dimensiones, por lo tanto, su aplicación en este
+problema lo convierte en una buena opción, ya que en general, para observar
+correctamente la hoja de una planta, suele acomodársela de modo que su forma se
+puede observar claramente.
+
+Como un proceso previo a la clasificación de una hoja por la forma que tiene,
+tendremos que encontrar la manera de obtener su silueta de la forma más limpia
+posible, por lo que utilizamos también técnicas de preprocesado de imágenes como
+binarización de imágenes Otsu, que nos permite separar objetos en una imagen
+según la disposición del histograma de la imagen.
 
 \section{Objetivos}
-\label{sec:org52553eb}
+\label{sec:orgc99e6ae}
 \subsection{Objetivo general}
-\label{sec:org4b6811f}
+\label{sec:orgf501058}
 \begin{itemize}
-\item Desarrollo de una biblioteca para reconocimiento de objetos en imágenes sin
-hacer uso de métodos avanzados de inteligencia artificial como redes
-neuronales.
+\item Desarrollo de una biblioteca para reconocer y clasificar hojas de plantas en
+imágenes sin hacer uso de métodos avanzados de inteligencia artificial como
+redes neuronales.
 \end{itemize}
 
 \subsection{Objetivos específicos}
-\label{sec:orge669229}
+\label{sec:orgc4911ca}
 \begin{itemize}
 \item Desarrollo de una biblioteca que permita una cómoda manipulación de imágenes
 para su procesamiento.
 \item Expansión de la biblioteca de procesamiento de imágenes implementando
 diferentes algoritmos de preprocesamiento de imágenes.
 \item Desarrollo de un notebook destallando paso a paso el uso de la biblioteca para
-un caso específico.
+este caso específico.
 \end{itemize}
 
 \section{Fundamentos teóricos}
-\label{sec:org3a94746}
+\label{sec:orge0a9b78}
 Primeramente definiremos algunos conceptos que utilizaremos en el desarrollo del
 proyecto. Para el tratamiento de una imagen digital, la representaremos como una
 función de la posición de sus pixeles como sigue:
@@ -90,14 +120,14 @@ los colores rojo, verde y azul. En el caso de una imagen digital, estos valores
 varían en el rango \([0,255]\in \mathbb N\).
 
 \section{Desarrollo}
-\label{sec:orgf97f44b}
+\label{sec:orge37e224}
 El proyecto no contará con una interfaz gráfica, sino que constará de un
 notebook interactivo de jupyter en el que se podrá apreciar tanto el código
 fuente como los resultados de cada paso del proceso de manipulado de las
 imágenes. Para esto, se desarrollan las siguientes bibliotecas:
 
 \subsection{Clase Image}
-\label{sec:org19052f4}
+\label{sec:org8d4e6f3}
 La clase imagen es una abstracción básica que nos permitirá acceder y manipular
 fácilmente una imagen que puede ser cargada desde un archivo, o puede ser creada
 desde un array y posteriormente mostrada en un notebook de jupyter.
@@ -140,20 +170,20 @@ rojo, lo que convertirá a la imagen a blanco y negro.
 \end{description}
 
 \subsection{Preprocesamiento}
-\label{sec:orgff51208}
+\label{sec:orgdcdf52f}
 
 \subsubsection{Reducción de ruido}
-\label{sec:orgfe5e3eb}
+\label{sec:orgfb7f1ff}
 \subsubsection{Corrección de iluminación}
-\label{sec:orgc9ed89e}
+\label{sec:orgba892a6}
 
 \subsection{Segmentación}
-\label{sec:orge879f8a}
+\label{sec:org60b32e5}
 
 \subsection{Procesamiento}
-\label{sec:orga53401a}
+\label{sec:org2ec38e4}
 \subsubsection{Momentos de Hu}
-\label{sec:orgb8e94cf}
+\label{sec:org3cba0a5}
 Para obtener un valor propio de la forma geométrica de un objeto en una imagen,
 usaremos momentos de Hu o momentos invariantes, un algoritmo que nos permite
 obtener un conjunto de valores asignados a una matriz según la disposición que
@@ -176,37 +206,37 @@ m_{pq} = \sum_x \sum_y x^p y^q I(x, y)
 $$
 
 \subsubsection{Extracción de rasgos}
-\label{sec:org2db925f}
+\label{sec:orgdc371b9}
 
 \subsubsection{Datos de comparación}
-\label{sec:orgdf4601e}
+\label{sec:org734cd57}
 
 \subsubsection{Comparación y clasificación}
-\label{sec:orgccd28d3}
+\label{sec:org9580a2d}
 
 \section{Pruebas}
-\label{sec:org6a2248d}
+\label{sec:orgb5b59c1}
 
 \section{Conclusiones}
-\label{sec:org39b988f}
+\label{sec:org92e0ac1}
 
 \section{Referencias}
-\label{sec:org224eb89}
+\label{sec:org7386212}
 
 \section{Anexos}
-\label{sec:org0a5de6d}
+\label{sec:orgbe8f03c}
 \subsection{Código fuente}
-\label{sec:org518cf38}
+\label{sec:orgc5034aa}
 \subsubsection{Clase Imagen}
-\label{sec:orgb3aaa0f}
+\label{sec:orgf310613}
 \subsubsection{Filtrado ADF}
-\label{sec:org0ca0987}
+\label{sec:org8b4a4f9}
 \subsubsection{Filtrado Top-Hat}
-\label{sec:org350abd9}
+\label{sec:org1996111}
 \subsubsection{Filtrado Otsu}
-\label{sec:org95e0c01}
+\label{sec:org3218226}
 \subsubsection{Momentos de Hu}
-\label{sec:orga55aa49}
+\label{sec:org9c44482}
 Obtención de momentos geométricos de orden \(p+q\), \(m_{pq} = \sum_x \sum_y x^p y^q I(x, y)\).
 
 \begin{verbatim}
@@ -215,8 +245,8 @@ def m_pq():
 \end{verbatim}
 
 \subsubsection{KNN}
-\label{sec:orgb224def}
+\label{sec:orgeff09ac}
 
 \subsection{Resultados}
-\label{sec:org4b55086}
+\label{sec:orgc643ca9}
 \end{document}
