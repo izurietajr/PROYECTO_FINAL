@@ -6,7 +6,7 @@ Proyecto de clasificación automatizada de hojas de plantas según su morfologí
 mediante técnicas de procesamiento de imágenes.
 
 El informe completo se encuentra
-[aquí](https://github.com/izurietajr/image-recognition/blob/master/informe/report.pdf).
+[aquí](https://github.com/izurietajr/image-recognition/blob/master/report/report.pdf).
 El código de la librería desarrollada para el procesamiento de las imágenes
 [aquí](https://github.com/izurietajr/image-recognition/blob/master/image.py).
 
