@@ -92,6 +92,7 @@ plano de los momentos obtenidos de una imagen para poder clasificarla en uno de
 estos grupos con cierta probabilidad de pertenencia según su distancia al
 centro de gravedad de cada conjunto.
 
+* Morfología foliar
 * Desarrollo
 El proyecto no contará con una interfaz gráfica, sino que constará de un
 notebook interactivo de jupyter en el que se podrá apreciar tanto el código
