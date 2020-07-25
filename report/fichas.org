@@ -7,14 +7,25 @@
 :author: Ming Kuei Hu
 :doi: doi:10.1109/TIT.1962.1057692
 :END:
-*** Momentos de orden (p+q)
+*** Momentos geométricos de orden (p+q)
 
 $$ m_{pq} =  \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} x^p y^q p(x, y)\,dx\,dy \quad p, q = 0, 1, 2, ... $$
 
-*** Momentos centrales
-
 $$ m_{pq} = \sum_x \sum_y x^p y^q I(x, y) $$
+*** Momentos centrales
+Los momentos centrales se definen como sigue:
+
+$$ \mu_{pq} = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} (x-\bar x)^p (y-\bar y)^q p(x, y)\, d(x-\bar x)\,d(y-\bar y) $$
+donde:
+
+$$ \bar x = \frac{m_{10}}{m_{00}}, \quad \bar y = \frac{m_{01}}{m_{00}} $$
+son las coordenadas del centroide del objeto en la imagen.
+
+*** Momnetos invariantes
+$\phi1 = \mu_{20} + \mu_{02}$
+$\phi2 = (\mu_{20} - \mu_{02})^2 + 4\mu_{11}^2$
 
 ** Filtrado de Otsu
 ** Clustering
 ** Morfología foliar
+*** Classification of plant leaf images with complicated background
