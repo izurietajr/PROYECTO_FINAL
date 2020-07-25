@@ -15,6 +15,7 @@ morfológica de hojas de plantas, sin recurrir al uso de redes neuronales y con 
 número reducido de imágenes de prueba.
 \end{abstract}
 
+
 * Introducción
 Las redes neuronales son en general una solución eficiente para el problema de
 reconocimiento de objetos en imágenes, especialmente en casos en que el objeto
@@ -93,6 +94,8 @@ estos grupos con cierta probabilidad de pertenencia según su distancia al
 centro de gravedad de cada conjunto.
 
 * Morfología foliar
+La morfología foliar ...
+
 * Desarrollo
 El proyecto no contará con una interfaz gráfica, sino que constará de un
 notebook interactivo de jupyter en el que se podrá apreciar tanto el código
