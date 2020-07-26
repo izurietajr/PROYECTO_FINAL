@@ -156,13 +156,6 @@ desde un array y posteriormente mostrada en un notebook de jupyter.
   sobre una imagen img2, permitirá cambiar el valor de cada canal por su valor
   rojo, lo que convertirá a la imagen a blanco y negro.
 
-** Preprocesamiento
-
-*** Reducción de ruido
-*** Corrección de iluminación
-
-*** Segmentación
-
 ** Procesamiento
 *** Filtrado Otsu
 *** Momentos de Hu
@@ -208,9 +201,9 @@ $$ \phi_1 = n_{20} + n_{02}, \quad \phi_2 = (n_{20} + n_{02})^2 + 4n_{11}^2 $$
 Estos dos valores representan la extensión y la estrechez del objeto
 respectivamente[fn:spread-slenderness].
 
-*** Datos de comparación
+** Datos de comparación
 
-*** Comparación y clasificación
+** Comparación y clasificación
 
 ** Resultados
 ** Evaluación

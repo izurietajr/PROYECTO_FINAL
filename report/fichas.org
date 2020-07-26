@@ -33,17 +33,12 @@ $$ n_{pq} = \frac{u_{pq}}{u_{00}^r}, \quad r=\frac{p+q}{2}+1 $$
 
 para calcular los momentos invariantes:
 
-$$ \phi_1 = n_{20} + n_{02} $$
-
-$$ \phi_2 = (n_{20} + n_{02})^2 + 4n_{11}^2 $$
+$\phi1 = \mu_{20} + \mu_{02}$
+$\phi2 = (\mu_{20} - \mu_{02})^2 + 4\mu_{11}^2$
 
 Ø1: The sum of horizontal and vertical directed variance, more distributed towards horizontal and vertical axes, the values are enlarged.
 Ø2: The covariance value of vertical and horizontal axes when the variance intensity of vertical axis and horizontal axis were similar.
 
-
-*** Momentos invariantes
-$\phi1 = \mu_{20} + \mu_{02}$
-$\phi2 = (\mu_{20} - \mu_{02})^2 + 4\mu_{11}^2$
 
 ** Filtrado de Otsu
 ** Clustering
