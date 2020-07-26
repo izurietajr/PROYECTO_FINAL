@@ -13,6 +13,10 @@ $$ m_{pq} =  \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} x^p y^q p(x, y)\,dx
 
 $$ m_{pq} = \sum_x \sum_y x^p y^q I(x, y) $$
 *** Momentos centrales
+:PROPERTIES:
+:title:    Palmprint identification algorithm
+:END:
+
 Los momentos centrales se definen como sigue:
 
 $$ \mu_{pq} = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} (x-\bar x)^p (y-\bar y)^q p(x, y)\, d(x-\bar x)\,d(y-\bar y) $$
@@ -21,7 +25,23 @@ donde:
 $$ \bar x = \frac{m_{10}}{m_{00}}, \quad \bar y = \frac{m_{01}}{m_{00}} $$
 son las coordenadas del centroide del objeto en la imagen.
 
-*** Momnetos invariantes
+-----
+
+para calcular los momentos centrales
+
+$$ n_{pq} = \frac{u_{pq}}{u_{00}^r}, \quad r=\frac{p+q}{2}+1 $$
+
+para calcular los momentos invariantes:
+
+$$ \phi_1 = n_{20} + n_{02} $$
+
+$$ \phi_2 = (n_{20} + n_{02})^2 + 4n_{11}^2 $$
+
+Ø1: The sum of horizontal and vertical directed variance, more distributed towards horizontal and vertical axes, the values are enlarged.
+Ø2: The covariance value of vertical and horizontal axes when the variance intensity of vertical axis and horizontal axis were similar.
+
+
+*** Momentos invariantes
 $\phi1 = \mu_{20} + \mu_{02}$
 $\phi2 = (\mu_{20} - \mu_{02})^2 + 4\mu_{11}^2$
 

@@ -167,9 +167,9 @@ desde un array y posteriormente mostrada en un notebook de jupyter.
 *** Filtrado Otsu
 *** Momentos de Hu
 Para obtener un valor propio de la forma geométrica de un objeto en una imagen,
-usaremos momentos de Hu o momentos invariantes, un algoritmo que nos permite
-obtener un conjunto de valores asignados a una matriz según la disposición que
-esta tenga, sin variar en cuanto a transformaciones como escalado o rotación.
+usaremos momentos invariantes de Hu, un conjunto de valores calculados en base a
+la imagen, que nos permiten describir su forma y que permanecen constantes aún
+cuando se aplican sobre la imagen transformaciones como rotada o escalado.
 
 Los momentos de orden $(p+q)$ en dos dimensiones sobre una función de
 distribución $p(x, y)$ continua, son calculados mediante integrales de Riemman
@@ -179,13 +179,34 @@ $$
 m_{pq} =  \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} x^p y^q p(x, y)\,dx\,dy \quad p, q = 0, 1, 2, ...
 $$
 
-Sin embargo, en el caso del tratamiento de imágenes, esta será la función
-discreta $I(x, y)$ que describa nuestra imagen en función de la posición de sus
-pixeles, por lo que la definición de momentos usada será:
+En este caso, usaremos momentos centrales que se definen como sigue para una
+función $p(x, y)$ continua:
+
+$$ \mu_{pq} = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} (x-\bar x)^p (y-\bar y)^q p(x, y)\, d(x-\bar x)\,d(y-\bar y) $$
+
+donde:
+
+$$ \bar x = \frac{m_{10}}{m_{00}}, \quad \bar y = \frac{m_{01}}{m_{00}} $$
+
+son las coordenadas del centroide del objeto en la imagen.
+
+Sin embargo, ya que se trata de una imagen digital en que usamos valores
+discretos, calcularemos los momentos centrales con las ecuaciones:
 
 $$
-m_{pq} = \sum_x \sum_y x^p y^q I(x, y)
+\mu_{pq} = \sum_x \sum_y x^p y^q I(x, y)
 $$
+
+$$ n_{pq} = \frac{\mu_{pq}}{\mu_{00}^r}, \quad r=\frac{p+q}{2}+1 $$
+
+Con estas ecuaciones podremos calcular los momentos invariantes que usaremos en
+este proyecto. Nos limitamos a usar los primeros dos momentos invariantes de Hu,
+ya que nos son suficientes en este caso.
+
+$$ \phi_1 = n_{20} + n_{02}, \quad \phi_2 = (n_{20} + n_{02})^2 + 4n_{11}^2 $$
+
+Estos dos valores representan la extensión y la estrechez del objeto
+respectivamente[fn:spread-slenderness].
 
 *** Datos de comparación
 
@@ -203,3 +224,7 @@ $$
 #+include: ../image.py src python
 ** Pruebas y resultados
 *** Momentos invariantes de Hu
+
+* Footnotes
+
+[fn:spread-slenderness] /spread/ y /slenderness/ en el paper original.
