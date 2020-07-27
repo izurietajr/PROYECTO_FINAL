@@ -72,6 +72,10 @@ class Image:
         cropped_image.load_array(cropped_array)
         return cropped_image
 
+    def black_white(self):
+        image = self
+        image.map_over(lambda r, g, b: (min(r, g, b), min(r, g, b), min(r, g, b)))
+        return image
 
     def hu_moments(self):
         """ Primeros dos momentos de Hu """
