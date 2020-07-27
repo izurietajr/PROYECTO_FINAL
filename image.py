@@ -77,6 +77,12 @@ class Image:
         image.map_over(lambda r, g, b: (min(r, g, b), min(r, g, b), min(r, g, b)))
         return image
 
+    def binarize(self, center):
+        bound = lambda x: 255 if x > center else 0
+        image = self
+        image.map_over(lambda r, g, b: (bound(b), bound(b), bound(b)))
+        return image
+
     def hu_moments(self):
         """ Primeros dos momentos de Hu """
         def moment_pq(p, q):
