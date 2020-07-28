@@ -94,7 +94,29 @@ estos grupos con cierta probabilidad de pertenencia según su distancia al
 centro de gravedad de cada conjunto.
 
 * Morfología foliar
-La morfología foliar ...
+La morfología foliar es una disciplina que clasifica las hojas de las plantas
+por la forma que tienen, pueden clasificarse según diferentes atributos como la
+forma del limbo, tipos de ápices foliares, tipos de bases, tipos de vernación y
+nerviación y si son o no compuestas.
+
+En la figura [[fig:leaf]] se pueden apreciar las diferentes partes por las que las
+hojas son clasificadas. En este trabajo, por simplicidad, tomamos en cuenta sólo
+la clasificación por la forma del limbo, de modo que distinguiremos las
+siguientes formas de limbo:
+
+- lanceolada
+- flabelada
+- acumitada
+- orbicular
+- romboide
+- ovada
+- astada
+- palmeada
+- sagitada
+
+#+caption: Partes de una hoja.
+#+name: fig:leaf
+[[./images/leaf-parts.jpg]]
 
 * Desarrollo
 El proyecto no contará con una interfaz gráfica, sino que constará de un
@@ -168,9 +190,7 @@ Los momentos de orden $(p+q)$ en dos dimensiones sobre una función de
 distribución $p(x, y)$ continua, son calculados mediante integrales de Riemman
 como sigue:
 
-$$
-m_{pq} =  \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} x^p y^q p(x, y)\,dx\,dy \quad p, q = 0, 1, 2, ...
-$$
+$$ m_{pq} =  \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} x^p y^q p(x, y)\,dx\,dy \quad p, q = 0, 1, 2, ... $$
 
 En este caso, usaremos momentos centrales que se definen como sigue para una
 función $p(x, y)$ continua:
