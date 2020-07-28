@@ -561,6 +561,11 @@ resultado, con más imágenes de prueba y un mejor preprocesamiento de la imagen
 se podrían obtener mejores resultados.
 
 * Referencias
+- Visual pattern recognition by moment invariants
+- Palmprint identification algorithm
+- A threshold selection method from grey level histogram
+- Reconocimiento de objetos en fotografías
+- Classification of plant leaf images with complicated background
 
 * Anexos
 ** Código fuente
