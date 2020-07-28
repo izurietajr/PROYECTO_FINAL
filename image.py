@@ -80,11 +80,6 @@ class Image:
         self.map_over(lambda r, g, b: (min(r, g, b), min(r, g, b), min(r, g, b)))
         return self
 
-    def binarize(self, center):
-        bound = lambda x: 255 if x > center else 0
-        self.map_over(lambda r, g, b: (bound(b), bound(b), bound(b)))
-        return self
-
     def hu_moments(self):
         """ Primeros dos momentos de Hu """
         def moment_pq(p, q):
@@ -114,16 +109,6 @@ class Image:
 
         return (self.X, self.Y)
 
-    def histogram(self):
-        # hist = [(x, 0) for x in range(255)]
-        hist = [0 for _ in range(256)]
-        for x, y in self.iterator():
-            pixel = self.I_m(x, y)
-            print(pixel)
-            hist[pixel] += 1
-        return hist
-
-
     def color_histogram(self):
         histr = [0 for _ in range(256)]
         histg = [0 for _ in range(256)]
@@ -139,3 +124,43 @@ class Image:
 
     def otsu(self):
         pass
+
+    def histogram(self):
+        # hist = [(x, 0) for x in range(255)]
+        hist = [0 for _ in range(256)]
+        for x, y in self.iterator():
+            p = self.I_m(x, y)
+            hist[p] += 1
+        return hist
+
+    def minimum_otsu(self):
+        hist = self.histogram()
+        hist_sum = sum(hist)
+        P = list(map(lambda x: x/hist_sum, hist))
+        # función de probabilidad
+        q1 = lambda t: sum(P[0:t])
+        q2 = lambda t: sum(P[t+1:256])
+        # media
+        u1 = lambda t: sum([(i * P[i]) / q1(t) for i in range(0, t)])
+        u2 = lambda t: sum([(i * P[i]) / q2(t) for i in range(t+1, 256)])
+        # varianza
+        v1 = lambda t: sum([(i - u1(t))**2 * (P[i] / q1(t)) for i in range(0, t)])
+        v2 = lambda t: sum([(i - u2(t))**2 * (P[i] / q2(t)) for i in range(t+1, 256)])
+        # weighted variance
+        vw = lambda t: q1(t) * v1(t) + q2(t) * v2(t)
+        minor = 100000
+        ret = 0
+        for t in range(256):
+            try:
+                vwt = vw(t)
+                if vwt < minor:
+                    minor = vwt
+                    ret = t
+            except:
+                print("div by zero")
+        return ret
+
+    def binarize(self, center):
+        bound = lambda x: 255 if x > center else 0
+        self.map_over(lambda r, g, b: (bound(b), bound(b), bound(b)))
+        return self
