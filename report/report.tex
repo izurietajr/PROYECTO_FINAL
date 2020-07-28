@@ -1,4 +1,4 @@
-% Created 2020-07-28 Tue 17:59
+% Created 2020-07-28 Tue 19:05
 % Intended LaTeX compiler: pdflatex
 \documentclass[letter]{article}
 \usepackage[utf8]{inputenc}
@@ -58,7 +58,7 @@ número reducido de imágenes de prueba.
 
 
 \section{Introducción}
-\label{sec:orgeee0bbe}
+\label{sec:org3e5046d}
 Las redes neuronales son en general una solución eficiente para el problema de
 reconocimiento de objetos en imágenes, especialmente en casos en que el objeto
 que se quiere obtener de una imagen puede encontrarse en muchas posiciones y
@@ -86,9 +86,9 @@ binarización de imágenes Otsu, que nos permite separar objetos en una imagen
 según la disposición del histograma de la imagen.
 
 \subsection{Objetivos}
-\label{sec:org835b53e}
+\label{sec:orgbb67597}
 \subsubsection{Objetivo general}
-\label{sec:orgb78a9a1}
+\label{sec:orgc9e2741}
 \begin{itemize}
 \item Desarrollo de una biblioteca para reconocer y clasificar hojas de plantas en
 imágenes sin hacer uso de métodos avanzados de inteligencia artificial como
@@ -96,7 +96,7 @@ redes neuronales.
 \end{itemize}
 
 \subsubsection{Objetivos específicos}
-\label{sec:orgaa50eac}
+\label{sec:orgb1cff6b}
 \begin{itemize}
 \item Desarrollo de una biblioteca que permita una cómoda manipulación de imágenes
 para su procesamiento.
@@ -107,7 +107,7 @@ este caso específico.
 \end{itemize}
 
 \section{Metodología}
-\label{sec:orgf3392eb}
+\label{sec:org15fbbc5}
 Este trabajo constituye un análisis descriptivo de la aplicación de diversos
 métodos de procesamiento de imágenes, que son aplicados a este problema
 específico para comprobar sus resultados. Se parte de la hipótesis inductiva de
@@ -145,13 +145,13 @@ estos grupos con cierta probabilidad de pertenencia según su distancia al
 centro de gravedad de cada conjunto.
 
 \section{Morfología foliar}
-\label{sec:org810b8a5}
+\label{sec:orgfe5449a}
 La morfología foliar es una disciplina que clasifica las hojas de las plantas
 por la forma que tienen, pueden clasificarse según diferentes atributos como la
 forma del limbo, tipos de ápices foliares, tipos de bases, tipos de vernación y
 nerviación y si son o no compuestas.
 
-En la figura \ref{fig:org04e793e} se pueden apreciar las diferentes partes por las que las
+En la figura \ref{fig:org0a82cbd} se pueden apreciar las diferentes partes por las que las
 hojas son clasificadas. En este trabajo, por simplicidad, tomamos en cuenta sólo
 la clasificación por la forma del limbo en hojas simples, de modo que
 distinguiremos las siguientes formas:
@@ -171,11 +171,11 @@ distinguiremos las siguientes formas:
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=.9\linewidth]{./images/leaf-parts.jpg}
-\caption{\label{fig:org04e793e}Partes de una hoja.}
+\caption{\label{fig:org0a82cbd}Partes de una hoja.}
 \end{figure}
 
 \section{Desarrollo}
-\label{sec:orga32f40b}
+\label{sec:org7aa573f}
 Para este proyecto desarrollamos una librería que nos ayude a manipular una
 imagen, proveyendo las funciones de convolución, modificación píxel a píxel,
 histograma, cargado de imágenes y la capacidad de convertirlas en matrices y
@@ -188,7 +188,7 @@ fuente como los resultados de cada paso del proceso de manipulado de las
 imágenes.
 
 \subsection{Representación de imágenes}
-\label{sec:org36f3847}
+\label{sec:orgaecd696}
 Primeramente definiremos algunos conceptos que utilizaremos en el desarrollo del
 proyecto. Para el tratamiento de una imagen digital, la representaremos como una
 función de la posición de sus pixeles como sigue:
@@ -203,7 +203,7 @@ los colores rojo, verde y azul. En el caso de una imagen digital, estos valores
 varían en el rango \([0,255]\in \mathbb N\).
 
 \subsection{Manipulación de imágenes}
-\label{sec:org53d17e4}
+\label{sec:orga04667f}
 La clase imagen es una abstracción básica que nos permitirá acceder y manipular
 fácilmente una imagen que puede ser cargada desde un archivo, o puede ser creada
 desde un array y posteriormente mostrada en un notebook de jupyter.
@@ -247,7 +247,7 @@ rojo, lo que convertirá a la imagen a blanco y negro.
 \end{description}
 
 \subsection{Procesamiento}
-\label{sec:org52015ac}
+\label{sec:org1d2d80c}
 El procesamiento de una imagen para su posterior clasificación, consiste en la
 separación de la parte de interés de la imagen (en este caso la hoja), de modo
 que pueda apreciarse su forma sin objetos de fondo, esto se realizará usando el
@@ -255,42 +255,42 @@ método de filtrado de Otsu, posteriormente se obtendrán los momentos invariant
 de Hu de la imagen, que describen la forma que tiene la hoja.
 
 \subsubsection{Segmentación de umbral de Otsu}
-\label{sec:orgc6a51a9}
+\label{sec:org19a2c9e}
 La segmentación de una imagen por el método de Otsu consiste en separar un
 objeto en una imagen de otros objetos que no nos son de interés, para esto
 trabajamos sobre el histograma de una imagen, que representa la frecuencia en
 que aparecen los colores en una imagen, un ejemplo de histograma separado por
-colores rojo, verde y azul se puede ver en la figura \ref{fig:orga455bb8}
+colores rojo, verde y azul se puede ver en la figura \ref{fig:org21a54cd}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=.9\linewidth]{./images/histogram1.png}
-\caption{\label{fig:orga455bb8}Histogramas por color en una imagen.}
+\caption{\label{fig:org21a54cd}Histogramas por color en una imagen.}
 \end{figure}
 
 El problema de la segmentación de objetos en una imagen es un problema de
 minimización, cuando encontramos una imagen en que el objeto de interés tiene un
 color diferente al color de fondo, el histograma de la imagen toma una
-disposición bimodal como se muestra en la figura \ref{fig:org0ad270e}, trabajaremos con
+disposición bimodal como se muestra en la figura \ref{fig:orga43e3da}, trabajaremos con
 imágenes convertidas a blanco y negro para tener un único histograma en el que
 realizar la separación.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=.9\linewidth]{./images/histogram2.png}
-\caption{\label{fig:org0ad270e}Histograma de la imagen en blanco y negro, se puede apreciar un valle entre los valores 50 a 100 que separa dos grupos de colores.}
+\caption{\label{fig:orga43e3da}Histograma de la imagen en blanco y negro, se puede apreciar un valle entre los valores 50 a 100 que separa dos grupos de colores.}
 \end{figure}
 
-Como se ve en la imagen \ref{fig:org0ad270e}, el histograma bimodal tiene una clara
+Como se ve en la imagen \ref{fig:orga43e3da}, el histograma bimodal tiene una clara
 reparación en la que podemos separar dos grupos de colores, el punto de
 separación se encontrará en el punto mínimo de ese valle, una vez encontrado
 este punto, podemos binarizar la imagen separándola por umbrales, de modo que el
-resultado es algo similar a la figura \ref{fig:orge4927ee}.
+resultado es algo similar a la figura \ref{fig:orgfe8bdd8}.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=5cm]{./images/binaryleaf.png}
-\caption{\label{fig:orge4927ee}Imagen binarizada tomando el valor 75 para separar los umbrales de color.}
+\caption{\label{fig:orgfe8bdd8}Imagen binarizada tomando el valor 75 para separar los umbrales de color.}
 \end{figure}
 
 La finalidad del método de Otsu es encontrar este punto mínimo en que la
@@ -298,7 +298,7 @@ separación de umbrales de color es óptima, esto se consigue encontrando el val
 \(t\) que minimiza la función:
 
 \begin{equation}
-\label{eq:org4060293}
+\label{eq:orgca1e3a2}
 \sigma_w^2(t) =  q_1(t)\sigma_1^2(t) + q_2(t)\sigma_2^2(t)
 \end{equation}
 
@@ -322,7 +322,7 @@ Y después de obtener la media de ambas clases, calculamos su varianza.
 $$ \sigma_1^2(t) = \sum_{i=1}^t [i-\mu_1(t)]^2 \frac{P(i)}{q_1(t)} , \quad \sigma_2^2(t) = \sum_{i=t+1}^I [i-\mu_2(t)]^2 \frac{P(i)}{q_2(t)} $$
 
 Con las funciones de probabilidad \(q_1(t)\) y \(q_2(t)\) y con la varianza de
-estas, podemos obtener la ecuación \ref{eq:org4060293}, que representa la varianza de
+estas, podemos obtener la ecuación \ref{eq:orgca1e3a2}, que representa la varianza de
 pesos por clase\footnote{Traducido de \emph{weighted within-class variance}.}. Tendremos ahora que minimizar esta función,
 para esto, la solución más sencilla consiste en evaluar esta función para cada
 valor de 0 a 255 y seleccionar el valor mínimo para t, ya que
@@ -333,10 +333,10 @@ Los métodos \texttt{minimum\_otsu} y \texttt{binarize} implementan esta técnic
 se ocupa de calcular el valor t que minimiza la varianza, y \texttt{binarize} cambia
 los valores de los pixeles de la imagen, dependiendo si se encuentran a la
 derecha o izquierda del valor t, dando como resultado, una imagen como la figura
-\ref{fig:orge4927ee}. El código puede encontrarse en la sección \hyperref[sec:orgad8d800]{Anexos}.
+\ref{fig:orgfe8bdd8}. El código puede encontrarse en la sección \hyperref[sec:orgdfb6bfe]{Anexos}.
 
 \subsubsection{Momentos invariantes de Hu}
-\label{sec:org19c3279}
+\label{sec:orgfcc6a39}
 Para obtener un valor propio de la forma geométrica de un objeto en una imagen,
 usaremos momentos invariantes de Hu, un conjunto de valores calculados en base a
 la imagen, que nos permiten describir su forma y que permanecen constantes aún
@@ -377,14 +377,46 @@ $$ \phi_1 = n_{20} + n_{02}, \quad \phi_2 = (n_{20} + n_{02})^2 + 4n_{11}^2 $$
 Estos dos valores representan la extensión y la estrechez del objeto
 respectivamente\footnote{Traducido de \emph{spread} y \emph{slenderness} en el artículo original.}.
 Este proceso es implementado en el método \texttt{hu\_moments} de la clase image,
-retornando los dos primero momentos.
+retornando los dos primeros momentos.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\linewidth]{./images/stars.png}
+\caption{\label{fig:orgdff3fa4}Imagen de una estrella con transformaciones, primero la imagen original, luego escalada, luego rotada y finalmente escalada y deformada.}
+\end{figure}
+
+Probando el algoritmo con las tres imágenes de ejemplo de la figura \ref{fig:orgdff3fa4} obtenemos
+los valores:
+
+\begin{center}
+\begin{tabular}{lrr}
+ & \(\phi_1\) & \(\phi_2\)\\
+\hline
+Imagen 1 & 0.2162437035817964 & 7.15421105863606e-10\\
+Imagen 2 & 0.21685851808651274 & 4.778874641818779e-09\\
+Imagen 3 & 0.2162170223369867 & 6.370439738565976e-09\\
+Imagen 4 & 0.23248362379752913 & 0.007129570200901847\\
+\end{tabular}
+\end{center}
+
+Los valores de \(\phi_1\) y \(\phi_2\) para las primeras tres transformaciones son
+muy similares debido a que se trata de la misma forma en diferentes tamaños y
+posiciones, mientras que los momentos de la imagen 4 varían notablemente por
+estar deformada.
 
 \subsection{Datos de comparación}
-\label{sec:orgacfcfeb}
+\label{sec:org661711f}
 Para obtener datos de comparación, recolectamos algunas imágenes de ejemplo que
 nos servirán para tener valores iniciales de momentos invariantes para
-diferentes tipos de hojas. Inicialmente hacemos esto con una imagen por tipo,
-pero agregar más imágenes nos dará mejores resultados.
+diferentes tipos de hojas (Figura \ref{fig:orge93e56a}).
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=.9\linewidth]{./images/leaves.png}
+\caption{\label{fig:orge93e56a}Imágenes de prueba de los tipos de hojas que clasificamos.}
+\end{figure}
+
+Aplicando las técnicas de filtrado de Otsu y momentso invariantes de Hu, obtenemos los valores de \(\phi_1\) y \(\phi_2\) para las imágenes de prueba.
 
 \begin{table}[htbp]
 \caption{Momentos invariantes obtenidos de las imágenes de ejemplo.}
@@ -406,29 +438,31 @@ Sagitada & 0.06468482190387434 & 0.4117437381830096\\
 \end{tabular}
 \end{table}
 
+En la figura \ref{fig:org2d266b0} podemos ver cómo se distribuyen los momentos de las imágenes en el plano.
+
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=10cm]{./images/moments.jpg}
-\caption{Distribución de momentos invariantes por tipo de hoja en el plano \(\phi_1, \phi_2\).}
+\caption{\label{fig:org2d266b0}Distribución de momentos invariantes por tipo de hoja en el plano \(\phi_1, \phi_2\).}
 \end{figure}
 
 \subsection{Comparación y clasificación}
-\label{sec:org224e27b}
+\label{sec:org6e96d64}
 
 \subsection{Resultados}
-\label{sec:org3cddf3d}
+\label{sec:orgb7473e7}
 \subsection{Evaluación}
-\label{sec:org8d445e6}
+\label{sec:org8473b54}
 \section{Conclusiones}
-\label{sec:org37f8d30}
+\label{sec:org9b1a441}
 
 \section{Referencias}
-\label{sec:orgc889cce}
+\label{sec:org5d142a1}
 
 \section{Anexos}
-\label{sec:orgad8d800}
+\label{sec:orgdfb6bfe}
 \subsection{Código fuente}
-\label{sec:org0164d60}
+\label{sec:orge3305b2}
 \begin{verbatim}
 #!/usr/bin/env python3
 import matplotlib.image as plt_img
@@ -536,8 +570,8 @@ class Image:
         n02 = central_moment_20(m02, m01, m00)
         n11 = central_moment_20(m11, sqrt(m10*m01), m00)
 
-        self.X = (n20-n02)**2+4*(n11**2)
-        self.Y = n20+n02
+        self.X = n20+n02
+        self.Y = (n20-n02)**2+4*(n11**2)
 
         return (self.X, self.Y)
 
@@ -589,7 +623,7 @@ class Image:
                     minor = vwt
                     ret = t
             except:
-                print("div by zero")
+                pass
         return ret
 
     def binarize(self, center):

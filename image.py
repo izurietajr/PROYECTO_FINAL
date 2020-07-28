@@ -104,8 +104,8 @@ class Image:
         n02 = central_moment_20(m02, m01, m00)
         n11 = central_moment_20(m11, sqrt(m10*m01), m00)
 
-        self.X = (n20-n02)**2+4*(n11**2)
-        self.Y = n20+n02
+        self.X = n20+n02
+        self.Y = (n20-n02)**2+4*(n11**2)
 
         return (self.X, self.Y)
 
@@ -157,7 +157,7 @@ class Image:
                     minor = vwt
                     ret = t
             except:
-                print("div by zero")
+                pass
         return ret
 
     def binarize(self, center):

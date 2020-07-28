@@ -310,13 +310,37 @@ $$ \phi_1 = n_{20} + n_{02}, \quad \phi_2 = (n_{20} + n_{02})^2 + 4n_{11}^2 $$
 Estos dos valores representan la extensión y la estrechez del objeto
 respectivamente[fn:spread-slenderness].
 Este proceso es implementado en el método =hu_moments= de la clase image,
-retornando los dos primero momentos.
+retornando los dos primeros momentos.
+
+#+caption: Imagen de una estrella con transformaciones, primero la imagen original, luego escalada, luego rotada y finalmente escalada y deformada.
+#+name: fig:stars
+[[./images/stars.png]]
+
+Probando el algoritmo con las tres imágenes de ejemplo de la figura [[fig:stars]] obtenemos
+los valores:
+
+|          |            $\phi_1$ |              $\phi_2$ |
+|----------+---------------------+-----------------------|
+| Imagen 1 |  0.2162437035817964 |  7.15421105863606e-10 |
+| Imagen 2 | 0.21685851808651274 | 4.778874641818779e-09 |
+| Imagen 3 |  0.2162170223369867 | 6.370439738565976e-09 |
+| Imagen 4 | 0.23248362379752913 |  0.007129570200901847 |
+
+Los valores de $\phi_1$ y $\phi_2$ para las primeras tres transformaciones son
+muy similares debido a que se trata de la misma forma en diferentes tamaños y
+posiciones, mientras que los momentos de la imagen 4 varían notablemente por
+estar deformada.
 
 ** Datos de comparación
 Para obtener datos de comparación, recolectamos algunas imágenes de ejemplo que
 nos servirán para tener valores iniciales de momentos invariantes para
-diferentes tipos de hojas. Inicialmente hacemos esto con una imagen por tipo,
-pero agregar más imágenes nos dará mejores resultados.
+diferentes tipos de hojas (Figura [[fig:testleaves]]).
+
+#+caption: Imágenes de prueba de los tipos de hojas que clasificamos.
+#+name: fig:testleaves
+[[./images/leaves.png]]
+
+Aplicando las técnicas de filtrado de Otsu y momentso invariantes de Hu, obtenemos los valores de $\phi_1$ y $\phi_2$ para las imágenes de prueba.
 
 #+caption: Momentos invariantes obtenidos de las imágenes de ejemplo.
 |--------------+----------------------+---------------------|
@@ -333,8 +357,11 @@ pero agregar más imágenes nos dará mejores resultados.
 | Sagitada     |  0.06468482190387434 |  0.4117437381830096 |
 |--------------+----------------------+---------------------|
 
+En la figura [[fig:dist]] podemos ver cómo se distribuyen los momentos de las imágenes en el plano.
+
 #+attr_latex: :width 10cm
 #+caption: Distribución de momentos invariantes por tipo de hoja en el plano $\phi_1, \phi_2$.
+#+name: fig:dist
 [[./images/moments.jpg]]
 
 ** Comparación y clasificación
