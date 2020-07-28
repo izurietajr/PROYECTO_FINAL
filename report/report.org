@@ -1,7 +1,8 @@
 #+TITLE: Clasificación morfológica foliar mediante procesamiento de imágenes
 #+include: ~/org/templates/tarea.org
-#+latex_header: \newcommand{\hleft}{Procesamiento de imágenes}
+#+latex_header: \newcommand{\hleft}{Clasificación morfológica foliar}
 #+latex_header: \newcommand{\hright}{INF 324}
+#+author: Jesus Izurieta Veliz \quad Cristian Aquino Apaza
 
 
 \begin{abstract}
@@ -71,7 +72,8 @@ objetivo de clasificar una hoja en una imagen digital, siguiendo los pasos como
 se muestra a continuación:
 
 #+begin_center
-*Binarización de la imagen* \rightarrow *Descripción morfológica* \rightarrow *Clasificación* \rightarrow *Comparación*
+*Binarización de la imagen* \rightarrow *Descripción morfológica* \rightarrow
+ *Clasificación* \rightarrow *Comparación*
 #+end_center
 
 Cada uno de estos pasos implementa de forma independiente una técnica de
@@ -86,8 +88,8 @@ podremos separar grupos de objetos por colores. Para la descripción morfológic
 usamos momentos invariantes de Hu, una técnica que permite describir la forma de
 una imagen mediante valores numéricos que no varían ante transformaciones
 simples como escalado o rotación. Se analizan estadísticamente dos momentos de
-Hu ($\phi1$ y $\phi2$) para cada tipo de hoja de un conjunto de imágenes de
-prueba, con la finalidad de poder determinar áreas en el plano $\phi1$, $\phi2$
+Hu ($\phi_1$ y $\phi_2$) para cada tipo de hoja de un conjunto de imágenes de
+prueba, con la finalidad de poder determinar áreas en el plano $\phi_1$, $\phi_2$
 en que se encuentre cada tipo de hoja. Finalmente comparamos la posición en el
 plano de los momentos obtenidos de una imagen para poder clasificarla en uno de
 estos grupos con cierta probabilidad de pertenencia según su distancia al
@@ -101,8 +103,8 @@ nerviación y si son o no compuestas.
 
 En la figura [[fig:leaf]] se pueden apreciar las diferentes partes por las que las
 hojas son clasificadas. En este trabajo, por simplicidad, tomamos en cuenta sólo
-la clasificación por la forma del limbo, de modo que distinguiremos las
-siguientes formas de limbo:
+la clasificación por la forma del limbo en hojas simples, de modo que
+distinguiremos las siguientes formas:
 
 - lanceolada
 - flabelada
@@ -119,10 +121,16 @@ siguientes formas de limbo:
 [[./images/leaf-parts.jpg]]
 
 * Desarrollo
+Para este proyecto desarrollamos una librería que nos ayude a manipular una
+imagen, proveyendo las funciones de convolución, modificación píxel a píxel,
+histograma, cargado de imágenes y la capacidad de convertirlas en matrices y
+viceversa, además de implementar los filtros necesarios para clasificar
+imágenes.
+
 El proyecto no contará con una interfaz gráfica, sino que constará de un
 notebook interactivo de jupyter en el que se podrá apreciar tanto el código
 fuente como los resultados de cada paso del proceso de manipulado de las
-imágenes. Para esto, se desarrollan las siguientes bibliotecas:
+imágenes.
 
 ** Representación de imágenes
 Primeramente definiremos algunos conceptos que utilizaremos en el desarrollo del
@@ -138,7 +146,7 @@ color, tendremos en su lugar una tupla de tres elementos, uno para cada uno de
 los colores rojo, verde y azul. En el caso de una imagen digital, estos valores
 varían en el rango $[0,255]\in \mathbb N$.
 
-** Biblioteca Image
+** Manipulación de imágenes
 La clase imagen es una abstracción básica que nos permitirá acceder y manipular
 fácilmente una imagen que puede ser cargada desde un archivo, o puede ser creada
 desde un array y posteriormente mostrada en un notebook de jupyter.
@@ -149,7 +157,8 @@ desde un array y posteriormente mostrada en un notebook de jupyter.
   imagen, además define otros atributos como las dimensiones de la imagen.
 
 - Load array: :: (Parámetros: array) Almacena una matriz en el atributo =array=
-  de la imagen, la matriz debe ser una matriz de tuplas de tres valores.
+  de la imagen, la matriz debe ser contener tuplas de tres valores que se
+  encuentren entre 0 y 255.
 
 - Show: :: Retorna un objeto PIL.Image.Image que permite visualizar la imagen en
   un notebook de jupyter o almacenarla como un archivo.
@@ -165,7 +174,7 @@ desde un array y posteriormente mostrada en un notebook de jupyter.
   valor por defecto es rojo si no se define el parámetro color.
 
 - I mnormal: :: (Parámetros: x, y, color) Igual que I_m() pero con valores
-  normalizados en el rango [0, 1]
+  normalizados en el rango $[0, 1]$.
 
 - Iterator: ::  Retorna un iterador de tuplas x, y que facilita iteraciones
   sobre cada píxel de la imagen.
@@ -179,8 +188,64 @@ desde un array y posteriormente mostrada en un notebook de jupyter.
   rojo, lo que convertirá a la imagen a blanco y negro.
 
 ** Procesamiento
-*** Filtrado Otsu
-*** Momentos de Hu
+El procesamiento de una imagen para su posterior clasificación, consiste en la
+separación de la parte de interés de la imagen (en este caso la hoja), de modo
+que pueda apreciarse su forma sin objetos de fondo, esto se realizará usando el
+método de filtrado de Otsu, posteriormente se obtendrán los momentos invariantes
+de Hu de la imagen, que describen la forma que tiene la hoja.
+
+*** Segmentación de umbral de Otsu
+La segmentación de una imagen por el método de Otsu consiste en separar un
+objeto en una imagen de otros objetos que no nos son de interés, para esto
+trabajamos sobre el histograma de una imagen, que representa la frecuencia en
+que aparecen los colores en una imagen, un ejemplo de histograma separado por
+colores rojo, verde y azul se puede ver en la figura [[fig:histo1]]
+
+#+caption: Histogramas por color en una imagen.
+#+name: fig:histo1
+[[./images/histogram1.png]]
+
+El problema de la segmentación de objetos en una imagen es un problema de
+minimización, cuando encontramos una imagen en que el objeto de interés tiene un
+color diferente al color de fondo, el histograma de la imagen toma una
+disposición bimodal como se muestra en la figura [[fig:histo2]], trabajaremos con
+imágenes convertidas a blanco y negro para tener un único histograma en el que
+realizar la separación.
+
+#+caption: Histograma de la imagen en blanco y negro, se puede apreciar un valle entre los valores 50 a 100 que separa dos grupos de colores.
+#+name: fig:histo2
+[[./images/histogram2.png]]
+
+Como se ve en la imagen [[fig:histo2]], el histograma bimodal tiene una clara
+reparación en la que podemos separar dos grupos de colores, el punto de
+separación se encontrará en el punto mínimo de ese valle, una vez encontrado
+este punto, podemos binarizar la imagen separándola por umbrales, de modo que el
+resultado es algo similar a la figura [[fig:binaryleaf]].
+
+#+attr_latex: :width 5cm
+#+caption: Imagen binarizada tomando el valor 75 para separar los umbrales de color.
+#+name: fig:binaryleaf
+[[./images/binaryleaf.png]]
+
+La finalidad del método de Otsu es encontrar este punto mínimo en que la
+separación de umbrales de color es óptima, esto se consigue encontrando el punto
+mínimo de la siguiente función:
+
+$$ \sigma_w^2(t) =  q_1(t)\sigma_1^2(t) + q_2(t)\sigma_2^2(t) $$
+
+En esta función $t$ es la variable que debe ser minimizada y representa el punto
+medio que dividirá los dos umbrales. Las funciones $q_1(t)$ y $q_2(t)$
+representan la probabilidad de cada grupo se definen como sigue:
+
+$$ q_1(t) = \sum_{i=1}^t P(i) \quad q_2(t) = \sum_{i=t+1}^I P(i) $$
+
+Para obtener estos valores, necesitamos normalizar nuesto histograma de modo que
+su área sea igual a 1 y de este modo se convierta en una función de
+probabilidad, esta función normalizada es $P(i)$, lo que hacen las funciones
+$q_1(t)$ y $q_2(t)$ es separar esta función en dos partes, una de 0 a t y otra
+de t+1 hasta I que es en este caso es 255.
+
+*** Momentos invariantes de Hu
 Para obtener un valor propio de la forma geométrica de un objeto en una imagen,
 usaremos momentos invariantes de Hu, un conjunto de valores calculados en base a
 la imagen, que nos permiten describir su forma y que permanecen constantes aún
@@ -201,7 +266,7 @@ donde:
 
 $$ \bar x = \frac{m_{10}}{m_{00}}, \quad \bar y = \frac{m_{01}}{m_{00}} $$
 
-son las coordenadas del centroide del objeto en la imagen.
+son las coordenadas del centroide[fn:centroide] del objeto en la imagen.
 
 Sin embargo, ya que se trata de una imagen digital en que usamos valores
 discretos, calcularemos los momentos centrales con las ecuaciones:
@@ -220,8 +285,33 @@ $$ \phi_1 = n_{20} + n_{02}, \quad \phi_2 = (n_{20} + n_{02})^2 + 4n_{11}^2 $$
 
 Estos dos valores representan la extensión y la estrechez del objeto
 respectivamente[fn:spread-slenderness].
+Este proceso es implementado en el método =hu_moments= de la clase image,
+retornando los dos primero momentos.
 
 ** Datos de comparación
+Para obtener datos de comparación, recolectamos algunas imágenes de ejemplo que
+nos servirán para tener valores iniciales de momentos invariantes para
+diferentes tipos de hojas. Inicialmente hacemos esto con una imagen por tipo,
+pero agregar más imágenes nos dará mejores resultados.
+
+#+caption: Momentos invariantes obtenidos de las imágenes de ejemplo.
+|--------------+----------------------+---------------------|
+| Tipo de hoja |             $\phi_1$ |            $\phi_2$ |
+|--------------+----------------------+---------------------|
+| Lanceolada   |  0.08241080043135868 |  0.3999693426853134 |
+| Flabelada    |  0.02452288351987129 |  0.3207811493752293 |
+| Acumitada    |  0.05055337469475332 |  0.3610066090495226 |
+| Orbicular    | 0.020097387958003515 | 0.31300964425473893 |
+| Romboide     |  0.04190473916737033 | 0.34816780188557916 |
+| Ovada        | 0.023285971562215516 | 0.35150337160513034 |
+| Astada       | 0.033590539033761975 |  0.3190729877395031 |
+| Palmeada     | 0.012872876070329099 |  0.2860389435844065 |
+| Sagitada     |  0.06468482190387434 |  0.4117437381830096 |
+|--------------+----------------------+---------------------|
+
+#+attr_latex: :width 10cm
+#+caption: Distribución de momentos invariantes por tipo de hoja en el plano $\phi_1, \phi_2$.
+[[./images/moments.jpg]]
 
 ** Comparación y clasificación
 
@@ -240,4 +330,6 @@ respectivamente[fn:spread-slenderness].
 
 * Footnotes
 
-[fn:spread-slenderness] /spread/ y /slenderness/ en el paper original.
+[fn:centroide] Centro de gravedad.
+
+[fn:spread-slenderness] Traducido de /spread/ y /slenderness/ en el paper original.
