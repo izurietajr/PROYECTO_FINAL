@@ -365,10 +365,200 @@ En la figura [[fig:dist]] podemos ver cómo se distribuyen los momentos de las i
 [[./images/moments.jpg]]
 
 ** Comparación y clasificación
+Para comparar los resultados de momentos de una imagen con valores obtenidos
+previamente, el algoritmo ideal a ser utilizado es K-nearest neighbors.
 
-** Resultados
-** Evaluación
-* Conclusiones
+*** Algoritmo K-Nearest Neighbors
+K-Nearest Neighbors, o KNN para abreviar, es uno de los algoritmos de
+aprendizaje automático más simples y se utiliza en una amplia gama de
+instituciones. KNN es un algoritmo de aprendizaje lento no paramétrico. Cuando
+decimos que una técnica no es paramétrica, significa que no hace suposiciones
+sobre los datos subyacentes. En otras palabras, realiza su selección en función
+de la proximidad a otros puntos de datos, independientemente de la
+característica que representen los valores numéricos.Ser un vago algoritmo de
+aprendizaje implica que hay poca o ninguna fase de entrenamiento. Por lo tanto,
+podemos clasificar inmediatamente los nuevos puntos de datos a medida que se
+presentan.
+
+Algunos pros y contras de KNN
+
+**** Pros :
+- No hay suposiciones sobre los datos.
+- Algoritmo simple - fácil de entender
+- Se puede usar para clasificación y regresión
+
+**** Contras :
+- Requisito de memoria alta: todos los datos de entrenamiento deben estar
+  presentes en la memoria para calcular los K vecinos más cercanos
+- Sensible a características irrelevantes
+- Sensible a la escala de los datos ya que estamos calculando la distancia a los
+  puntos K más cercanos.
+
+** Ejecución y resultados
+Ahora procedemos a utilizar la biblioteca desarrollada con una imagen de ejemplo
+que podremos clasificar. Primeramente importamos las bibliotecas que usaremos.
+
+#+BEGIN_SRC python
+from image import Image
+import matplotlib.pyplot as plt
+#+END_SRC
+
+Cargaremos las imágenes de prueba que mostramos previamente en la figura
+[[fig:testleaves]].
+
+#+BEGIN_SRC python
+lanceolada = "./testimages/leafs/lanceolada.jpg"
+flabelada = "./testimages/leafs/flabelada.jpg"
+acumitada = "./testimages/leafs/acumitada.jpg"
+orbicular = "./testimages/leafs/orbicular.jpg"
+romboide = "./testimages/leafs/romboide.jpg"
+ovada = "./testimages/leafs/ovada.jpg"
+astada = "./testimages/leafs/astada.jpg"
+palmeada = "./testimages/leafs/palmeada.jpg"
+sagitada = "./testimages/leafs/sagitada.jpg"
+
+leafs =[lanceolada, flabelada, acumitada, orbicular, romboide, ovada, astada, palmeada, sagitada]
+#+END_SRC
+
+Podemos abrir una de estas imágenes para comprobar que se hayan cargado correctamente:
+
+#+BEGIN_SRC python
+ll = Image()
+ll.load_file(flabelada)
+ll.show()
+#+END_SRC
+
+Nos mostrará la imagen:
+
+[[./images/show.png]]
+
+A continuación hacemos una copia de la imagen y calculamos sus momentos invariantes
+
+#+BEGIN_SRC python
+lle = ll
+bound = lambda x: 255 if x > 200 else 1
+lle.map_over(lambda r, g, b: (bound(g), bound(g), bound(g)))
+lle.show()
+print(ll.hu_moments())
+#+END_SRC
+
+[[./images/showbn.png]]
+
+Como resultado obtenemos: =(0.29768184782794443, 0.021067187247205375)=.
+Realizaremos este proceso de forma iterativa para cada una de las imágenes de
+prueba, para esto desarrollamos las funciones  binarize y get_moments.
+
+#+BEGIN_SRC python
+def binarize_(url):
+    ll = Image()
+    ll.load_file(url)
+    ll.map_over(lambda r, g, b: (bound(b), bound(b), bound(b)))
+    return ll
+
+binary_leafs = map(binarize_, leafs)
+hu_moments = list(map(lambda x: x.hu_moments(), binary_leafs))
+
+def get_moments(url):
+    im = Image()
+    im.load_file(url)
+    return ("  "+url.split("/")[3].split(".")[0], im.hu_moments())
+
+get_position = lambda x: x[1]
+#+END_SRC
+
+De este modo podremos visualizar la distribución de los momentos invariantes de
+las imágenes en el plano.
+
+#+BEGIN_SRC python
+hu_name_moments = list(map(get_moments, leafs))
+plt.scatter(*zip(*hu_moments))
+for label, moments in hu_name_moments:
+    plt.annotate(label, moments)
+url, moments = get_moments(leafs[1])
+plt.show()
+#+END_SRC
+
+[[./images/plano.png]]
+
+Ahora cargamos la imagen de prueba que usaremos
+
+#+BEGIN_SRC python
+test = "./testimages/leafs/test3.jpg"
+testimage = Image()
+testimage.load_file(test)
+testimage.show()
+#+END_SRC
+
+[[./images/test.png]]
+
+Convertimos la imagen a blanco y negro
+
+#+BEGIN_SRC python
+testimage.black_white().show()
+
+#+END_SRC
+
+[[./images/testbn.png]]
+
+Y obtenemos su histograma
+
+#+BEGIN_SRC python
+hist_normal = testimage.histogram()
+plt.plot(hist_normal, 'g')
+plt.show()
+#+END_SRC
+
+[[./images/hist.png]]
+
+Calculamos el valor t que minimiza la varianza
+
+#+BEGIN_SRC python
+t = testimage.minimum_otsu()
+print(t)
+
+134
+#+END_SRC
+
+Y lo usamos para binarizar la imagen
+
+#+BEGIN_SRC python
+image = testimage.copy()
+image.binarize(t).show()
+#+END_SRC
+
+[[./images/testbin.png]]
+
+Calculamos los momentos de Hu de la imagen
+
+#+BEGIN_SRC python
+hm = image.hu_moments()
+print(hm)
+#+END_SRC
+
+Y obtenemos =(0.3601956207386796, 0.010512156197008187)=.
+
+Finalmente agregamos la imagen a la gráfica para comprobar sus cercanía con
+otros valores.
+
+#+BEGIN_SRC python
+hu_moments = list(map(get_position, hu_name_moments))
+tm = ("imagen de prueba", hm)
+
+plt.scatter(*zip(*hu_moments))
+for label, moments in hu_name_moments:
+    plt.annotate(label, moments)
+plt.scatter(*hm)
+plt.annotate(*tm)
+url, moments = get_moments(leafs[1])
+plt.show()
+#+END_SRC
+
+[[./images/result.png]]
+
+Finalmente comprobamos que a simple vista, la imagen se encuentra cerca de la
+forma ovada, que es la forma correcta, sin embargo se encuentra algo alejada del
+resultado, con más imágenes de prueba y un mejor preprocesamiento de la imagen
+se podrían obtener mejores resultados.
 
 * Referencias
 
