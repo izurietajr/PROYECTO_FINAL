@@ -228,22 +228,46 @@ resultado es algo similar a la figura [[fig:binaryleaf]].
 [[./images/binaryleaf.png]]
 
 La finalidad del método de Otsu es encontrar este punto mínimo en que la
-separación de umbrales de color es óptima, esto se consigue encontrando el punto
-mínimo de la siguiente función:
+separación de umbrales de color es óptima, esto se consigue encontrando el valor
+$t$ que minimiza la función:
 
-$$ \sigma_w^2(t) =  q_1(t)\sigma_1^2(t) + q_2(t)\sigma_2^2(t) $$
+#+name: eqn:sigma
+\begin{equation}
+\sigma_w^2(t) =  q_1(t)\sigma_1^2(t) + q_2(t)\sigma_2^2(t)
+\end{equation}
 
 En esta función $t$ es la variable que debe ser minimizada y representa el punto
 medio que dividirá los dos umbrales. Las funciones $q_1(t)$ y $q_2(t)$
 representan la probabilidad de cada grupo se definen como sigue:
 
-$$ q_1(t) = \sum_{i=1}^t P(i) \quad q_2(t) = \sum_{i=t+1}^I P(i) $$
+$$ q_1(t) = \sum_{i=1}^t P(i), \quad q_2(t) = \sum_{i=t+1}^I P(i) $$
 
 Para obtener estos valores, necesitamos normalizar nuesto histograma de modo que
-su área sea igual a 1 y de este modo se convierta en una función de
-probabilidad, esta función normalizada es $P(i)$, lo que hacen las funciones
-$q_1(t)$ y $q_2(t)$ es separar esta función en dos partes, una de 0 a t y otra
-de t+1 hasta I que es en este caso es 255.
+su área sea igual a 1 y de este modo se convierta en una función de probabilidad
+para cada valor de píxel, esta función normalizada es $P(i)$, lo que hacen las
+funciones $q_1(t)$ y $q_2(t)$ es separar esta función en dos partes, una de 0 a
+t y otra de t+1 hasta I que es en este caso es 255. Seguidamente obtenemos la
+media de ambas clases:
+
+$$ \mu_1(t) = \sum_{i=1}^t \frac{i P(i)}{q_1(t)} , \quad \mu_2(t) = \sum_{i=t+1}^I \frac{i P(i)}{q_2(t)} $$
+
+Y después de obtener la media de ambas clases, calculamos su varianza.
+
+$$ \sigma_1^2(t) = \sum_{i=1}^t [i-\mu_1(t)]^2 \frac{P(i)}{q_1(t)} , \quad \sigma_2^2(t) = \sum_{i=t+1}^I [i-\mu_2(t)]^2 \frac{P(i)}{q_2(t)} $$
+
+Con las funciones de probabilidad $q_1(t)$ y $q_2(t)$ y con la varianza de
+estas, podemos obtener la ecuación [[eqn:sigma]], que representa la varianza de
+pesos por clase[fn:wightvariance]. Tendremos ahora que minimizar esta función,
+para esto, la solución más sencilla consiste en evaluar esta función para cada
+valor de 0 a 255 y seleccionar el valor mínimo para t, ya que
+computacionalmente, el cálculo de $\sigma_w^2(t)$ para cada t no tiene mucha
+complejidad.
+
+Los métodos =minimum_otsu= y =binarize= implementan esta técnica, =minimum_otsu=
+se ocupa de calcular el valor t que minimiza la varianza, y =binarize= cambia
+los valores de los pixeles de la imagen, dependiendo si se encuentran a la
+derecha o izquierda del valor t, dando como resultado, una imagen como la figura
+[[fig:binaryleaf]]. El código puede encontrarse en la sección [[Anexos][Anexos]].
 
 *** Momentos invariantes de Hu
 Para obtener un valor propio de la forma geométrica de un objeto en una imagen,
@@ -323,13 +347,12 @@ pero agregar más imágenes nos dará mejores resultados.
 
 * Anexos
 ** Código fuente
-*** Biblioteca Imagen
 #+include: ../image.py src python
-** Pruebas y resultados
-*** Momentos invariantes de Hu
 
 * Footnotes
 
+[fn:wightvariance] Traducido de /weighted within-class variance/.
+
 [fn:centroide] Centro de gravedad.
 
-[fn:spread-slenderness] Traducido de /spread/ y /slenderness/ en el paper original.
+[fn:spread-slenderness] Traducido de /spread/ y /slenderness/ en el artículo original.
