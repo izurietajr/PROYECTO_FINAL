@@ -430,6 +430,7 @@ ll.show()
 
 Nos mostrará la imagen:
 
+#+attr_latex: :width 5cm
 [[./images/show.png]]
 
 A continuación hacemos una copia de la imagen y calculamos sus momentos invariantes
@@ -442,6 +443,7 @@ lle.show()
 print(ll.hu_moments())
 #+END_SRC
 
+#+attr_latex: :width 5cm
 [[./images/showbn.png]]
 
 Como resultado obtenemos: =(0.29768184782794443, 0.021067187247205375)=.
@@ -478,6 +480,7 @@ url, moments = get_moments(leafs[1])
 plt.show()
 #+END_SRC
 
+#+attr_latex: :width 10cm
 [[./images/plano.png]]
 
 Ahora cargamos la imagen de prueba que usaremos
@@ -489,6 +492,7 @@ testimage.load_file(test)
 testimage.show()
 #+END_SRC
 
+#+attr_latex: :width 5cm
 [[./images/test.png]]
 
 Convertimos la imagen a blanco y negro
@@ -498,6 +502,7 @@ testimage.black_white().show()
 
 #+END_SRC
 
+#+attr_latex: :width 5cm
 [[./images/testbn.png]]
 
 Y obtenemos su histograma
@@ -508,6 +513,7 @@ plt.plot(hist_normal, 'g')
 plt.show()
 #+END_SRC
 
+#+attr_latex: :width 10cm
 [[./images/hist.png]]
 
 Calculamos el valor t que minimiza la varianza
@@ -526,6 +532,7 @@ image = testimage.copy()
 image.binarize(t).show()
 #+END_SRC
 
+#+attr_latex: :width 5cm
 [[./images/testbin.png]]
 
 Calculamos los momentos de Hu de la imagen
@@ -553,6 +560,7 @@ url, moments = get_moments(leafs[1])
 plt.show()
 #+END_SRC
 
+#+attr_latex: :width 10cm
 [[./images/result.png]]
 
 Finalmente comprobamos que a simple vista, la imagen se encuentra cerca de la
@@ -566,7 +574,7 @@ se podrían obtener mejores resultados.
 - A threshold selection method from grey level histogram
 - Reconocimiento de objetos en fotografías
 - Classification of plant leaf images with complicated background
-
+ 
 * Anexos
 ** Código fuente
 #+include: ../image.py src python
