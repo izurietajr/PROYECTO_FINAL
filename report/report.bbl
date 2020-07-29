@@ -1,0 +1,40 @@
+\begin{thebibliography}{}
+
+\bibitem[Cervantes et~al., 2017]{Cervantes2017}
+Cervantes, J., Taltempa, J., Garc{\'{i}}a-Lamont, F., Castilla, J.~S., Rendon,
+  A.~Y., and Jalili, L.~D. (2017).
+\newblock {An{\'{a}}lisis Comparativo de las t{\'{e}}cnicas utilizadas en un
+  Sistema de Reconocimiento de Hojas de Planta}.
+\newblock {\em RIAI - Revista Iberoamericana de Automatica e Informatica
+  Industrial}, 14(1):104--114.
+
+\bibitem[Hu, 1962]{Hu1962}
+Hu, M.~K. (1962).
+\newblock {Visual Pattern Recognition by Moment Invariants}.
+\newblock {\em IRE Transactions on Information Theory}, 8(2):179--187.
+
+\bibitem[Noh and Rhee, 2005]{Noh2005}
+Noh, J.~S. and Rhee, K.~H. (2005).
+\newblock {Palmprint identification algorithm using hu invariant moments and
+  otsu binarization}.
+\newblock {\em Proceedings - Fourth Annual ACIS International Conference on
+  Computer and Information Science, ICIS 2005}, 2005:94--99.
+
+\bibitem[Smith et~al., 1979]{Smith1979}
+Smith, P., Reid, D.~B., Environment, C., Palo, L., Alto, P., and Smith, P.~L.
+  (1979).
+\newblock {Smith et al. - 1979 - A Tlreshold Selection Method from Gray-Level
+  Histograms}.
+\newblock {\em IEEE Transaction on Systems, Man and Cybernetics}, 20(1):62--66.
+
+\bibitem[Wang et~al., 2008]{Wang2008}
+Wang, X.~F., Huang, D.~S., Du, J.~X., Xu, H., and Heutte, L. (2008).
+\newblock {Classification of plant leaf images with complicated background}.
+\newblock {\em Applied Mathematics and Computation}, 205(2):916--926.
+
+\bibitem[Wilfrido, 2015]{Wilfrido2015}
+Wilfrido, G. (2015).
+\newblock {Reconocimiento de objetos en fotografias}.
+\newblock pages 1--20.
+
+\end{thebibliography}
