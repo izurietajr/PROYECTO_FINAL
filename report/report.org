@@ -3,6 +3,7 @@
 #+latex_header: \newcommand{\hleft}{Clasificación morfológica foliar}
 #+latex_header: \newcommand{\hright}{INF 324}
 #+author: Jesus Izurieta Veliz \quad Cristian Aquino Apaza
+#+BIBLIOGRAPHY: report apalike
 
 
 \begin{abstract}
@@ -18,6 +19,17 @@ número reducido de imágenes de prueba.
 
 
 * Introducción
+Para clasificar la hoja de una planta, necesitamos una forma de representar su
+forma, en este punto nos será útil el método de momentos invariantes de Hu, que
+genera valores que describen la forma de un objeto si tenemos su silueta. Los
+momentos invariantes de Hu funcionan correctamente en objetos en dos dimensiones
+\cite{Hu1962} y pueden darnos valores de una imagen que no varían ante
+transformaciones simples como escalado o rotación, sin embargo, no nos serán
+útiles para transformaciones en tres dimensiones, por lo tanto, su aplicación en
+este problema lo convierte en una buena opción, ya que en general, para observar
+correctamente la hoja de una planta, suele acomodársela de modo que su forma se
+puede observar claramente su forma.
+
 Las redes neuronales son en general una solución eficiente para el problema de
 reconocimiento de objetos en imágenes, especialmente en casos en que el objeto
 que se quiere obtener de una imagen puede encontrarse en muchas posiciones y
@@ -26,17 +38,6 @@ cantidad de imágenes de prueba de modo que la red neuronal pueda entrenarse y
 responder apropiadamente a una gran cantidad de situaciones. En este caso, el
 problema que tratamos de resolver es de una complejidad menor y puede resolverse
 por otros medios.
-
-Para clasificar la hoja de una planta, necesitamos una forma de representar su
-forma, en este punto nos será útil el método de momentos invariantes de Hu, que
-genera valores que describen la forma de un objeto si tenemos su silueta. Los
-momentos invariantes de Hu funcionan correctamente en objetos en dos dimensiones
-y pueden darnos valores de una imagen que no varían ante transformaciones
-simples como escalado o rotación, sin embargo, no nos serán útiles para
-transformaciones en tres dimensiones, por lo tanto, su aplicación en este
-problema lo convierte en una buena opción, ya que en general, para observar
-correctamente la hoja de una planta, suele acomodársela de modo que su forma se
-puede observar claramente.
 
 Como un proceso previo a la clasificación de una hoja por la forma que tiene,
 tendremos que encontrar la manera de obtener su silueta de la forma más limpia
@@ -208,18 +209,18 @@ colores rojo, verde y azul se puede ver en la figura [[fig:histo1]]
 El problema de la segmentación de objetos en una imagen es un problema de
 minimización, cuando encontramos una imagen en que el objeto de interés tiene un
 color diferente al color de fondo, el histograma de la imagen toma una
-disposición bimodal como se muestra en la figura [[fig:histo2]], trabajaremos con
+disposición bimodal \cite{Smith1979} como se muestra en la figura [[fig:histo2]], trabajaremos con
 imágenes convertidas a blanco y negro para tener un único histograma en el que
 realizar la separación.
 
-#+caption: Histograma de la imagen en blanco y negro, se puede apreciar un valle entre los valores 50 a 100 que separa dos grupos de colores.
+#+caption: Histograma de la imagen en blanco y negro, se puede apreciar un valle entre los valores 50 a 100 que separa dos grupos de mayor frecuencia.
 #+name: fig:histo2
 [[./images/histogram2.png]]
 
 Como se ve en la imagen [[fig:histo2]], el histograma bimodal tiene una clara
 reparación en la que podemos separar dos grupos de colores, el punto de
 separación se encontrará en el punto mínimo de ese valle, una vez encontrado
-este punto, podemos binarizar la imagen separándola por umbrales, de modo que el
+este punto, podemos binarizar \cite{Noh2005} la imagen separándola por umbrales, de modo que el
 resultado es algo similar a la figura [[fig:binaryleaf]].
 
 #+attr_latex: :width 5cm
@@ -244,10 +245,10 @@ $$ q_1(t) = \sum_{i=1}^t P(i), \quad q_2(t) = \sum_{i=t+1}^I P(i) $$
 
 Para obtener estos valores, necesitamos normalizar nuesto histograma de modo que
 su área sea igual a 1 y de este modo se convierta en una función de probabilidad
-para cada valor de píxel, esta función normalizada es $P(i)$, lo que hacen las
-funciones $q_1(t)$ y $q_2(t)$ es separar esta función en dos partes, una de 0 a
-t y otra de t+1 hasta I que es en este caso es 255. Seguidamente obtenemos la
-media de ambas clases:
+\cite{Smith1979} para cada valor de píxel, esta función normalizada es $P(i)$,
+lo que hacen las funciones $q_1(t)$ y $q_2(t)$ es separar esta función en dos
+partes, una de 0 a t y otra de t+1 hasta I que es en este caso es 255.
+Seguidamente obtenemos la media de ambas clases:
 
 $$ \mu_1(t) = \sum_{i=1}^t \frac{i P(i)}{q_1(t)} , \quad \mu_2(t) = \sum_{i=t+1}^I \frac{i P(i)}{q_2(t)} $$
 
@@ -273,7 +274,8 @@ derecha o izquierda del valor t, dando como resultado, una imagen como la figura
 Para obtener un valor propio de la forma geométrica de un objeto en una imagen,
 usaremos momentos invariantes de Hu, un conjunto de valores calculados en base a
 la imagen, que nos permiten describir su forma y que permanecen constantes aún
-cuando se aplican sobre la imagen transformaciones como rotada o escalado.
+cuando se aplican sobre la imagen transformaciones como rotación, reflexión o
+escalado \cite{Hu1962}.
 
 Los momentos de orden $(p+q)$ en dos dimensiones sobre una función de
 distribución $p(x, y)$ continua, son calculados mediante integrales de Riemman
@@ -417,7 +419,10 @@ astada = "./testimages/leafs/astada.jpg"
 palmeada = "./testimages/leafs/palmeada.jpg"
 sagitada = "./testimages/leafs/sagitada.jpg"
 
-leafs =[lanceolada, flabelada, acumitada, orbicular, romboide, ovada, astada, palmeada, sagitada]
+leafs =[
+    lanceolada, flabelada, acumitada, orbicular,
+    romboide, ovada, astada, palmeada, sagitada
+]
 #+END_SRC
 
 Podemos abrir una de estas imágenes para comprobar que se hayan cargado correctamente:
@@ -542,10 +547,8 @@ hm = image.hu_moments()
 print(hm)
 #+END_SRC
 
-Y obtenemos =(0.3601956207386796, 0.010512156197008187)=.
-
-Finalmente agregamos la imagen a la gráfica para comprobar sus cercanía con
-otros valores.
+Y obtenemos =(0.3601956207386796, 0.010512156197008187)=. Seguidamente agregamos
+la imagen a la gráfica para comprobar sus cercanía con otros valores.
 
 #+BEGIN_SRC python
 hu_moments = list(map(get_position, hu_name_moments))
@@ -563,20 +566,32 @@ plt.show()
 #+attr_latex: :width 10cm
 [[./images/result.png]]
 
-Finalmente comprobamos que a simple vista, la imagen se encuentra cerca de la
-forma ovada, que es la forma correcta, sin embargo se encuentra algo alejada del
-resultado, con más imágenes de prueba y un mejor preprocesamiento de la imagen
-se podrían obtener mejores resultados.
+Finalmente comprobamos que a simple vista, los momentos invariantes calculados
+para la imagen de prueba se encuentran cercanas a los momentos de la hoja de
+forma ovada, que es la forma que le corresponde.
 
-* Referencias
-- Visual pattern recognition by moment invariants
-- Palmprint identification algorithm
-- A threshold selection method from grey level histogram
-- Reconocimiento de objetos en fotografías
-- Classification of plant leaf images with complicated background
- 
+* Conclusiones y observaciones
+Aunque la imagen de prueba se encuentra más cercana al valor esperado que a
+otros, esto no garantiza que este siempre vaya a ser el caso, o que dos imágenes
+diferentes tengan momentos invariantes similares. La recolección de más imágenes
+de prueba y el tratamiento estadístico apropiado de sus resultados, serían los
+pasos a seguir para obtener mejores resultados, además de la aplicación de un
+algoritmo de clasificación como k-nearest neighbors que se describió brevemente
+en este trabajo.
+
+\newpage
+
+\bibliographystyle{apalike}
+\bibliography{report}
+
+\newpage
+
 * Anexos
 ** Código fuente
+Este es el contenido de la biblioteca =image= desarrollada para manipular
+imágenes con comodidad e implementar los diferentes métodos de procesamiento de
+imágenes usados en este proyecto.
+
 #+include: ../image.py src python
 
 * Footnotes

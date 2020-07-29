@@ -1,4 +1,4 @@
-% Created 2020-07-28 Tue 20:06
+% Created 2020-07-28 Tue 23:42
 % Intended LaTeX compiler: pdflatex
 \documentclass[letter]{article}
 \usepackage[utf8]{inputenc}
@@ -58,7 +58,18 @@ número reducido de imágenes de prueba.
 
 
 \section{Introducción}
-\label{sec:org0bd67e0}
+\label{sec:org9206202}
+Para clasificar la hoja de una planta, necesitamos una forma de representar su
+forma, en este punto nos será útil el método de momentos invariantes de Hu, que
+genera valores que describen la forma de un objeto si tenemos su silueta. Los
+momentos invariantes de Hu funcionan correctamente en objetos en dos dimensiones
+\cite{Hu1962} y pueden darnos valores de una imagen que no varían ante
+transformaciones simples como escalado o rotación, sin embargo, no nos serán
+útiles para transformaciones en tres dimensiones, por lo tanto, su aplicación en
+este problema lo convierte en una buena opción, ya que en general, para observar
+correctamente la hoja de una planta, suele acomodársela de modo que su forma se
+puede observar claramente su forma.
+
 Las redes neuronales son en general una solución eficiente para el problema de
 reconocimiento de objetos en imágenes, especialmente en casos en que el objeto
 que se quiere obtener de una imagen puede encontrarse en muchas posiciones y
@@ -68,17 +79,6 @@ responder apropiadamente a una gran cantidad de situaciones. En este caso, el
 problema que tratamos de resolver es de una complejidad menor y puede resolverse
 por otros medios.
 
-Para clasificar la hoja de una planta, necesitamos una forma de representar su
-forma, en este punto nos será útil el método de momentos invariantes de Hu, que
-genera valores que describen la forma de un objeto si tenemos su silueta. Los
-momentos invariantes de Hu funcionan correctamente en objetos en dos dimensiones
-y pueden darnos valores de una imagen que no varían ante transformaciones
-simples como escalado o rotación, sin embargo, no nos serán útiles para
-transformaciones en tres dimensiones, por lo tanto, su aplicación en este
-problema lo convierte en una buena opción, ya que en general, para observar
-correctamente la hoja de una planta, suele acomodársela de modo que su forma se
-puede observar claramente.
-
 Como un proceso previo a la clasificación de una hoja por la forma que tiene,
 tendremos que encontrar la manera de obtener su silueta de la forma más limpia
 posible, por lo que utilizamos también técnicas de preprocesado de imágenes como
@@ -86,9 +86,9 @@ binarización de imágenes Otsu, que nos permite separar objetos en una imagen
 según la disposición del histograma de la imagen.
 
 \subsection{Objetivos}
-\label{sec:org191d72b}
+\label{sec:org1a11d8a}
 \subsubsection{Objetivo general}
-\label{sec:org5a7a683}
+\label{sec:orgd9b8b7e}
 \begin{itemize}
 \item Desarrollo de una biblioteca para reconocer y clasificar hojas de plantas en
 imágenes sin hacer uso de métodos avanzados de inteligencia artificial como
@@ -96,7 +96,7 @@ redes neuronales.
 \end{itemize}
 
 \subsubsection{Objetivos específicos}
-\label{sec:orgaea0130}
+\label{sec:orgb73f10e}
 \begin{itemize}
 \item Desarrollo de una biblioteca que permita una cómoda manipulación de imágenes
 para su procesamiento.
@@ -107,7 +107,7 @@ este caso específico.
 \end{itemize}
 
 \section{Metodología}
-\label{sec:org357f273}
+\label{sec:orgf979054}
 Este trabajo constituye un análisis descriptivo de la aplicación de diversos
 métodos de procesamiento de imágenes, que son aplicados a este problema
 específico para comprobar sus resultados. Se parte de la hipótesis inductiva de
@@ -145,13 +145,13 @@ estos grupos con cierta probabilidad de pertenencia según su distancia al
 centro de gravedad de cada conjunto.
 
 \section{Morfología foliar}
-\label{sec:orgd0fe7ff}
+\label{sec:org1436cda}
 La morfología foliar es una disciplina que clasifica las hojas de las plantas
 por la forma que tienen, pueden clasificarse según diferentes atributos como la
 forma del limbo, tipos de ápices foliares, tipos de bases, tipos de vernación y
 nerviación y si son o no compuestas.
 
-En la figura \ref{fig:org99f3bff} se pueden apreciar las diferentes partes por las que las
+En la figura \ref{fig:org6597ded} se pueden apreciar las diferentes partes por las que las
 hojas son clasificadas. En este trabajo, por simplicidad, tomamos en cuenta sólo
 la clasificación por la forma del limbo en hojas simples, de modo que
 distinguiremos las siguientes formas:
@@ -171,11 +171,11 @@ distinguiremos las siguientes formas:
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=.9\linewidth]{./images/leaf-parts.jpg}
-\caption{\label{fig:org99f3bff}Partes de una hoja.}
+\caption{\label{fig:org6597ded}Partes de una hoja.}
 \end{figure}
 
 \section{Desarrollo}
-\label{sec:org19075c5}
+\label{sec:org34d5191}
 Para este proyecto desarrollamos una librería que nos ayude a manipular una
 imagen, proveyendo las funciones de convolución, modificación píxel a píxel,
 histograma, cargado de imágenes y la capacidad de convertirlas en matrices y
@@ -188,7 +188,7 @@ fuente como los resultados de cada paso del proceso de manipulado de las
 imágenes.
 
 \subsection{Representación de imágenes}
-\label{sec:org09b5fde}
+\label{sec:org0b528ea}
 Primeramente definiremos algunos conceptos que utilizaremos en el desarrollo del
 proyecto. Para el tratamiento de una imagen digital, la representaremos como una
 función de la posición de sus pixeles como sigue:
@@ -203,7 +203,7 @@ los colores rojo, verde y azul. En el caso de una imagen digital, estos valores
 varían en el rango \([0,255]\in \mathbb N\).
 
 \subsection{Manipulación de imágenes}
-\label{sec:org9452aba}
+\label{sec:orgbc5189f}
 La clase imagen es una abstracción básica que nos permitirá acceder y manipular
 fácilmente una imagen que puede ser cargada desde un archivo, o puede ser creada
 desde un array y posteriormente mostrada en un notebook de jupyter.
@@ -247,7 +247,7 @@ rojo, lo que convertirá a la imagen a blanco y negro.
 \end{description}
 
 \subsection{Procesamiento}
-\label{sec:orgd0b7d6c}
+\label{sec:orgb652142}
 El procesamiento de una imagen para su posterior clasificación, consiste en la
 separación de la parte de interés de la imagen (en este caso la hoja), de modo
 que pueda apreciarse su forma sin objetos de fondo, esto se realizará usando el
@@ -255,42 +255,42 @@ método de filtrado de Otsu, posteriormente se obtendrán los momentos invariant
 de Hu de la imagen, que describen la forma que tiene la hoja.
 
 \subsubsection{Segmentación de umbral de Otsu}
-\label{sec:org23adca3}
+\label{sec:orgef20060}
 La segmentación de una imagen por el método de Otsu consiste en separar un
 objeto en una imagen de otros objetos que no nos son de interés, para esto
 trabajamos sobre el histograma de una imagen, que representa la frecuencia en
 que aparecen los colores en una imagen, un ejemplo de histograma separado por
-colores rojo, verde y azul se puede ver en la figura \ref{fig:orgbf9205d}
+colores rojo, verde y azul se puede ver en la figura \ref{fig:org37a67fc}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=.9\linewidth]{./images/histogram1.png}
-\caption{\label{fig:orgbf9205d}Histogramas por color en una imagen.}
+\caption{\label{fig:org37a67fc}Histogramas por color en una imagen.}
 \end{figure}
 
 El problema de la segmentación de objetos en una imagen es un problema de
 minimización, cuando encontramos una imagen en que el objeto de interés tiene un
 color diferente al color de fondo, el histograma de la imagen toma una
-disposición bimodal como se muestra en la figura \ref{fig:org068ab8d}, trabajaremos con
+disposición bimodal \cite{Smith1979} como se muestra en la figura \ref{fig:org3925312}, trabajaremos con
 imágenes convertidas a blanco y negro para tener un único histograma en el que
 realizar la separación.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=.9\linewidth]{./images/histogram2.png}
-\caption{\label{fig:org068ab8d}Histograma de la imagen en blanco y negro, se puede apreciar un valle entre los valores 50 a 100 que separa dos grupos de colores.}
+\caption{\label{fig:org3925312}Histograma de la imagen en blanco y negro, se puede apreciar un valle entre los valores 50 a 100 que separa dos grupos de mayor frecuencia.}
 \end{figure}
 
-Como se ve en la imagen \ref{fig:org068ab8d}, el histograma bimodal tiene una clara
+Como se ve en la imagen \ref{fig:org3925312}, el histograma bimodal tiene una clara
 reparación en la que podemos separar dos grupos de colores, el punto de
 separación se encontrará en el punto mínimo de ese valle, una vez encontrado
-este punto, podemos binarizar la imagen separándola por umbrales, de modo que el
-resultado es algo similar a la figura \ref{fig:orgfc8b4da}.
+este punto, podemos binarizar \cite{Noh2005} la imagen separándola por umbrales, de modo que el
+resultado es algo similar a la figura \ref{fig:org0a7b6e1}.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=5cm]{./images/binaryleaf.png}
-\caption{\label{fig:orgfc8b4da}Imagen binarizada tomando el valor 75 para separar los umbrales de color.}
+\caption{\label{fig:org0a7b6e1}Imagen binarizada tomando el valor 75 para separar los umbrales de color.}
 \end{figure}
 
 La finalidad del método de Otsu es encontrar este punto mínimo en que la
@@ -298,7 +298,7 @@ separación de umbrales de color es óptima, esto se consigue encontrando el val
 \(t\) que minimiza la función:
 
 \begin{equation}
-\label{eq:org42c872c}
+\label{eq:org0127728}
 \sigma_w^2(t) =  q_1(t)\sigma_1^2(t) + q_2(t)\sigma_2^2(t)
 \end{equation}
 
@@ -310,10 +310,10 @@ $$ q_1(t) = \sum_{i=1}^t P(i), \quad q_2(t) = \sum_{i=t+1}^I P(i) $$
 
 Para obtener estos valores, necesitamos normalizar nuesto histograma de modo que
 su área sea igual a 1 y de este modo se convierta en una función de probabilidad
-para cada valor de píxel, esta función normalizada es \(P(i)\), lo que hacen las
-funciones \(q_1(t)\) y \(q_2(t)\) es separar esta función en dos partes, una de 0 a
-t y otra de t+1 hasta I que es en este caso es 255. Seguidamente obtenemos la
-media de ambas clases:
+\cite{Smith1979} para cada valor de píxel, esta función normalizada es \(P(i)\),
+lo que hacen las funciones \(q_1(t)\) y \(q_2(t)\) es separar esta función en dos
+partes, una de 0 a t y otra de t+1 hasta I que es en este caso es 255.
+Seguidamente obtenemos la media de ambas clases:
 
 $$ \mu_1(t) = \sum_{i=1}^t \frac{i P(i)}{q_1(t)} , \quad \mu_2(t) = \sum_{i=t+1}^I \frac{i P(i)}{q_2(t)} $$
 
@@ -322,7 +322,7 @@ Y después de obtener la media de ambas clases, calculamos su varianza.
 $$ \sigma_1^2(t) = \sum_{i=1}^t [i-\mu_1(t)]^2 \frac{P(i)}{q_1(t)} , \quad \sigma_2^2(t) = \sum_{i=t+1}^I [i-\mu_2(t)]^2 \frac{P(i)}{q_2(t)} $$
 
 Con las funciones de probabilidad \(q_1(t)\) y \(q_2(t)\) y con la varianza de
-estas, podemos obtener la ecuación \ref{eq:org42c872c}, que representa la varianza de
+estas, podemos obtener la ecuación \ref{eq:org0127728}, que representa la varianza de
 pesos por clase\footnote{Traducido de \emph{weighted within-class variance}.}. Tendremos ahora que minimizar esta función,
 para esto, la solución más sencilla consiste en evaluar esta función para cada
 valor de 0 a 255 y seleccionar el valor mínimo para t, ya que
@@ -333,14 +333,15 @@ Los métodos \texttt{minimum\_otsu} y \texttt{binarize} implementan esta técnic
 se ocupa de calcular el valor t que minimiza la varianza, y \texttt{binarize} cambia
 los valores de los pixeles de la imagen, dependiendo si se encuentran a la
 derecha o izquierda del valor t, dando como resultado, una imagen como la figura
-\ref{fig:orgfc8b4da}. El código puede encontrarse en la sección \hyperref[sec:org2e966b8]{Anexos}.
+\ref{fig:org0a7b6e1}. El código puede encontrarse en la sección \hyperref[sec:orga14eedd]{Anexos}.
 
 \subsubsection{Momentos invariantes de Hu}
-\label{sec:org43f61c3}
+\label{sec:org48ede60}
 Para obtener un valor propio de la forma geométrica de un objeto en una imagen,
 usaremos momentos invariantes de Hu, un conjunto de valores calculados en base a
 la imagen, que nos permiten describir su forma y que permanecen constantes aún
-cuando se aplican sobre la imagen transformaciones como rotada o escalado.
+cuando se aplican sobre la imagen transformaciones como rotación, reflexión o
+escalado \cite{Hu1962}.
 
 Los momentos de orden \((p+q)\) en dos dimensiones sobre una función de
 distribución \(p(x, y)\) continua, son calculados mediante integrales de Riemman
@@ -382,10 +383,10 @@ retornando los dos primeros momentos.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=.9\linewidth]{./images/stars.png}
-\caption{\label{fig:org4dc84d8}Imagen de una estrella con transformaciones, primero la imagen original, luego escalada, luego rotada y finalmente escalada y deformada.}
+\caption{\label{fig:org10dc54e}Imagen de una estrella con transformaciones, primero la imagen original, luego escalada, luego rotada y finalmente escalada y deformada.}
 \end{figure}
 
-Probando el algoritmo con las tres imágenes de ejemplo de la figura \ref{fig:org4dc84d8} obtenemos
+Probando el algoritmo con las tres imágenes de ejemplo de la figura \ref{fig:org10dc54e} obtenemos
 los valores:
 
 \begin{center}
@@ -405,15 +406,15 @@ posiciones, mientras que los momentos de la imagen 4 varían notablemente por
 estar deformada.
 
 \subsection{Datos de comparación}
-\label{sec:orgc48f752}
+\label{sec:orgef044bb}
 Para obtener datos de comparación, recolectamos algunas imágenes de ejemplo que
 nos servirán para tener valores iniciales de momentos invariantes para
-diferentes tipos de hojas (Figura \ref{fig:orgea7d1d2}).
+diferentes tipos de hojas (Figura \ref{fig:org8326242}).
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=.9\linewidth]{./images/leaves.png}
-\caption{\label{fig:orgea7d1d2}Imágenes de prueba de los tipos de hojas que clasificamos.}
+\caption{\label{fig:org8326242}Imágenes de prueba de los tipos de hojas que clasificamos.}
 \end{figure}
 
 Aplicando las técnicas de filtrado de Otsu y momentso invariantes de Hu, obtenemos los valores de \(\phi_1\) y \(\phi_2\) para las imágenes de prueba.
@@ -438,21 +439,21 @@ Sagitada & 0.06468482190387434 & 0.4117437381830096\\
 \end{tabular}
 \end{table}
 
-En la figura \ref{fig:org6e41e5b} podemos ver cómo se distribuyen los momentos de las imágenes en el plano.
+En la figura \ref{fig:org2e9349d} podemos ver cómo se distribuyen los momentos de las imágenes en el plano.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=10cm]{./images/moments.jpg}
-\caption{\label{fig:org6e41e5b}Distribución de momentos invariantes por tipo de hoja en el plano \(\phi_1, \phi_2\).}
+\caption{\label{fig:org2e9349d}Distribución de momentos invariantes por tipo de hoja en el plano \(\phi_1, \phi_2\).}
 \end{figure}
 
 \subsection{Comparación y clasificación}
-\label{sec:org535ceaa}
+\label{sec:org3ab2e2a}
 Para comparar los resultados de momentos de una imagen con valores obtenidos
 previamente, el algoritmo ideal a ser utilizado es K-nearest neighbors.
 
 \subsubsection{Algoritmo K-Nearest Neighbors}
-\label{sec:org8ca60cc}
+\label{sec:orgb089a54}
 K-Nearest Neighbors, o KNN para abreviar, es uno de los algoritmos de
 aprendizaje automático más simples y se utiliza en una amplia gama de
 instituciones. KNN es un algoritmo de aprendizaje lento no paramétrico. Cuando
@@ -468,7 +469,7 @@ Algunos pros y contras de KNN
 
 \begin{enumerate}
 \item Pros :
-\label{sec:org038daa0}
+\label{sec:org8a7b845}
 \begin{itemize}
 \item No hay suposiciones sobre los datos.
 \item Algoritmo simple - fácil de entender
@@ -476,7 +477,7 @@ Algunos pros y contras de KNN
 \end{itemize}
 
 \item Contras :
-\label{sec:org8591bc1}
+\label{sec:orgee72359}
 \begin{itemize}
 \item Requisito de memoria alta: todos los datos de entrenamiento deben estar
 presentes en la memoria para calcular los K vecinos más cercanos
@@ -487,7 +488,7 @@ puntos K más cercanos.
 \end{enumerate}
 
 \subsection{Ejecución y resultados}
-\label{sec:org7fe1771}
+\label{sec:orge224a84}
 Ahora procedemos a utilizar la biblioteca desarrollada con una imagen de ejemplo
 que podremos clasificar. Primeramente importamos las bibliotecas que usaremos.
 
@@ -497,7 +498,7 @@ import matplotlib.pyplot as plt
 \end{verbatim}
 
 Cargaremos las imágenes de prueba que mostramos previamente en la figura
-\ref{fig:orgea7d1d2}.
+\ref{fig:org8326242}.
 
 \begin{verbatim}
 lanceolada = "./testimages/leafs/lanceolada.jpg"
@@ -510,7 +511,10 @@ astada = "./testimages/leafs/astada.jpg"
 palmeada = "./testimages/leafs/palmeada.jpg"
 sagitada = "./testimages/leafs/sagitada.jpg"
 
-leafs =[lanceolada, flabelada, acumitada, orbicular, romboide, ovada, astada, palmeada, sagitada]
+leafs =[
+    lanceolada, flabelada, acumitada, orbicular,
+    romboide, ovada, astada, palmeada, sagitada
+]
 \end{verbatim}
 
 Podemos abrir una de estas imágenes para comprobar que se hayan cargado correctamente:
@@ -642,10 +646,8 @@ hm = image.hu_moments()
 print(hm)
 \end{verbatim}
 
-Y obtenemos \texttt{(0.3601956207386796, 0.010512156197008187)}.
-
-Finalmente agregamos la imagen a la gráfica para comprobar sus cercanía con
-otros valores.
+Y obtenemos \texttt{(0.3601956207386796, 0.010512156197008187)}. Seguidamente agregamos
+la imagen a la gráfica para comprobar sus cercanía con otros valores.
 
 \begin{verbatim}
 hu_moments = list(map(get_position, hu_name_moments))
@@ -664,25 +666,35 @@ plt.show()
 \includegraphics[width=10cm]{./images/result.png}
 \end{center}
 
-Finalmente comprobamos que a simple vista, la imagen se encuentra cerca de la
-forma ovada, que es la forma correcta, sin embargo se encuentra algo alejada del
-resultado, con más imágenes de prueba y un mejor preprocesamiento de la imagen
-se podrían obtener mejores resultados.
+Finalmente comprobamos que a simple vista, los momentos invariantes calculados
+para la imagen de prueba se encuentran cercanas a los momentos de la hoja de
+forma ovada, que es la forma que le corresponde.
 
-\section{Referencias}
-\label{sec:org7eccd8d}
-\begin{itemize}
-\item Visual pattern recognition by moment invariants
-\item Palmprint identification algorithm
-\item A threshold selection method from grey level histogram
-\item Reconocimiento de objetos en fotografías
-\item Classification of plant leaf images with complicated background
-\end{itemize}
+\section{Conclusiones y observaciones}
+\label{sec:org5132abf}
+Aunque la imagen de prueba se encuentra más cercana al valor esperado que a
+otros, esto no garantiza que este siempre vaya a ser el caso, o que dos imágenes
+diferentes tengan momentos invariantes similares. La recolección de más imágenes
+de prueba y el tratamiento estadístico apropiado de sus resultados, serían los
+pasos a seguir para obtener mejores resultados, además de la aplicación de un
+algoritmo de clasificación como k-nearest neighbors que se describió brevemente
+en este trabajo.
+
+\newpage
+
+\bibliographystyle{apalike}
+\bibliography{report}
+
+\newpage
 
 \section{Anexos}
-\label{sec:org2e966b8}
+\label{sec:orga14eedd}
 \subsection{Código fuente}
-\label{sec:org8937948}
+\label{sec:orgef80b0a}
+Este es el contenido de la biblioteca \texttt{image} desarrollada para manipular
+imágenes con comodidad e implementar los diferentes métodos de procesamiento de
+imágenes usados en este proyecto.
+
 \begin{verbatim}
 #!/usr/bin/env python3
 import matplotlib.image as plt_img
@@ -807,9 +819,6 @@ class Image:
             histg[g] += 1
             histb[b] += 1
         return (histr, histg, histb)
-
-    def otsu(self):
-        pass
 
     def histogram(self):
         # hist = [(x, 0) for x in range(255)]
