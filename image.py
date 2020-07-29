@@ -122,9 +122,6 @@ class Image:
             histb[b] += 1
         return (histr, histg, histb)
 
-    def otsu(self):
-        pass
-
     def histogram(self):
         # hist = [(x, 0) for x in range(255)]
         hist = [0 for _ in range(256)]
